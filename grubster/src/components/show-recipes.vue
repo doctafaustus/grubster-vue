@@ -34,22 +34,60 @@ export default {
   data() {
     return {
       recipes: [],
+      paginator: this.debounce(this.paginate, 150),
+      totalPages: 0,
+      pageCounter: 1,
     }
   },
   created() {
     this.$http.get('http://localhost:3000/api/recipes')
     .then(data => {
-      this.recipes = data.body;
-    })
+      this.totalPages = data.body.totalPages;
+      this.recipes = data.body.recipes;
+    });
+
+    window.addEventListener('scroll', this.paginator);
+  },
+  destroyed() {
+    window.removeEventListener('scroll', this.paginator);
   },
   methods: {
-    search() {
-      console.log('seraching!');
-      this.$http.get('http://localhost:3000/api/recipes/search?term=Mexican')
-      .then(data => {
-        this.recipes = data.body;
-      })
-    }
+    // search() {
+    //   console.log('seraching!');
+    //   this.$http.get('http://localhost:3000/api/recipes/search?term=Mexican')
+    //   .then(data => {
+    //     this.recipes = data.body;
+    //   })
+    // },
+    debounce(fn, wait, leading = false) {
+      let timeout;
+
+      return function(...args) {
+        function later() {
+          timeout = null;
+          if (!leading) fn(...args);
+        }
+
+        const callNow = leading && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) fn(...args);
+      };
+    },
+    paginate() {
+      if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
+        console.log('this.pageCounter', this.pageCounter);
+        console.log('this.totalPages', this.totalPages);
+
+        if (this.pageCounter < this.totalPages) {
+          this.pageCounter++;
+          this.$http.get(`http://localhost:3000/api/recipes?page=${this.pageCounter}`)
+          .then(data => {
+            this.recipes.push(...data.body.recipes);
+          });
+        }
+      }
+    },
   }
 }
 </script>

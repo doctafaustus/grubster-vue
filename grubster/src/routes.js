@@ -7,5 +7,5 @@ export default [
   { path: '/', component: showRecipes },
   { path: '/recent', component: recent },
   { path: '/most-popular', component: mostPopular },
-  { path: '/category', component: category }, 
+  { path: '/category/:category', component: category }, 
 ]

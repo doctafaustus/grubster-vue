@@ -21,34 +21,34 @@
           <div id="categories-dropdown">
             <ul class="category-column" id="meal-type-category">
               <li class="category-title">Meal Type</li>
-              <li><a href="#">Appetizers &amp; Snacks</a></li>
-              <li><a href="#">Breakfast &amp; Brunch</a></li>
-              <li><a href="#">Desserts</a></li>
-              <li><router-link to="/category?category=lunch-dinner">Lunch / Dinner</router-link></li>
-              <li><a href="#">Drinks</a></li>
-              <li><a href="#">Side Dishes</a></li>
+              <li><router-link to="/category/appetizers-snacks">Appetizers &amp; Snacks</router-link></li>
+              <li><router-link to="/category/breakfast-brunch">Breakfast &amp; Brunch</router-link></li>
+              <li><router-link to="/category/desserts">Desserts</router-link></li>
+              <li><router-link to="/category/lunch-dinner">Lunch / Dinner</router-link></li>
+              <li><router-link to="/category/drinks">Drinks</router-link></li>
+              <li><router-link to="/category/side-dishes">Side Dishes</router-link></li>
             </ul>
             <ul class="category-column" id="food-category">
               <li class="category-title">Food Type</li>
-              <li><a href="#">Beef</a></li>
-              <li><a href="#">Bread</a></li>
-              <li><a href="#">Chicken</a></li>
-              <li><a href="#">Eggs</a></li>
-              <li><a href="#">Milk &amp; Cheese</a></li>
-              <li><a href="#">Pasta</a></li>
-              <li><a href="#">Pork</a></li>
-              <li><a href="#">Salad</a></li>
-              <li><a href="#">Seafood</a></li>
-              <li><a href="#">Soup / Stew</a></li>
+              <li><router-link to="/category/beef">Beef</router-link></li>
+              <li><router-link to="/category/bread">Bread</router-link></li>
+              <li><router-link to="/category/chicken">Chicken</router-link></li>
+              <li><router-link to="/category/eggs">Eggs</router-link></li>
+              <li><router-link to="/category/milk-cheese">Milk &amp; Cheese</router-link></li>
+              <li><router-link to="/category/pasta">Pasta</router-link></li>
+              <li><router-link to="/category/pork">Pork</router-link></li>
+              <li><router-link to="/category/salad">Salad</router-link></li>
+              <li><router-link to="/category/seafood">Seafood</router-link></li>
+              <li><router-link to="/category/soup-stew">Soup / Stew</router-link></li>
             </ul>
             <ul class="category-column" id="diet-category">
               <li class="category-title">Diet</li>
-              <li><a href="#">Diabetic</a></li>
-              <li><a href="#">Gluten Free</a></li>
-              <li><a href="#">Low Fat</a></li>
-              <li><a href="#">Paleo</a></li>
-              <li><a href="#">Vegan</a></li>
-              <li><a href="#">Vegetarian</a></li>
+              <li><router-link to="/category/diabetic">Diabetic</router-link></li>
+              <li><router-link to="/category/gluten-free">Gluten Free</router-link></li>
+              <li><router-link to="/category/low-fat">Low Fat</router-link></li>
+              <li><router-link to="/category/paleo">Paleo</router-link></li>
+              <li><router-link to="/category/vegan">Vegan</router-link></li>
+              <li><router-link to="/category/vegetarian">Vegetarian</router-link></li>
             </ul>
           </div>
         </li>

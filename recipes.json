@@ -1,0 +1,242 @@
+[
+  {
+    "title": "Mashed Potato Stew",
+    "image": "http:\/\/res.cloudinary.com\/dormh2fvt\/image\/upload\/v1503873562\/clbf2jisa8gg3s6u1dgg.jpg",
+    "favorites": 5,
+    "category": [
+      "lunch-dinner",
+      "beef",
+      "pasta"
+    ]
+  },
+  {
+    "title": "Roast Chicken With Spring Vegetables",
+    "image": "https:\/\/lh3.googleusercontent.com\/ZR1oe_5O1fCvJSO_4Ndo1ZkQ3DOXG2xAF1HBPueJyl-W-ZJlrmJ5Ov5uotRTmc4zjbNirTekAb5o_arKVa6j=s320-c-e365",
+    "favorites": 4,
+    "category": [
+      "chicken",
+      "soup-stew"
+    ]
+  },
+  {
+    "title": "Coconut Panna Cotta",
+    "image": "https:\/\/lh3.googleusercontent.com\/hgTZLqbgjhCRJQaT7yf1pvny4Xg6hMytJTVBnCh8wkppI-0R6ieZDvfb9vKkJk_TyM9EKtG2JRFW2wCfZ4a26Yw",
+    "favorites": 1,
+    "category": [
+      "desserts"
+    ]
+  },
+  {
+    "title": "Mexican Bean Salad",
+    "image": "https:\/\/lh3.googleusercontent.com\/Vmy7hAS4iBRgUKIoklpKjlkgJvAqBd8C0B_XWRzhzDWE03aGfMnLS19Uw2uKj3MMRJEt6UM97zRa_oRUClzgCEk=s320-c-e365",
+    "favorites": 10,
+    "category": [
+      "salad",
+      "bread"
+    ]
+  },
+  {
+    "title": "Garlic Pita Bread Bites",
+    "image": "https:\/\/lh3.googleusercontent.com\/utwYWmsaesbhw931nmjLjJ7bvIKlMJBnFHqnCs0SJJuja1NU0Yc-cjYzrPMI85_lu5asGcS5S84ovlhHKztB1w=s320-c-e365",
+    "favorites": 7,
+    "category": [
+      "side-dishes"
+    ]
+  },
+  {
+    "title": "Parmesan Corn on the Cob",
+    "image": "https:\/\/lh3.googleusercontent.com\/ECYMb0bAROfJ8yqlS8NP3M8EH59DH8EK5XMLQNXSrBpS0IA0xwLbMu3gPkhtW-mllsRWMf7dCGztp4nP4bumTPM=s320-c-e365",
+    "favorites": 52,
+    "category": [
+      "milk-cheese"
+    ]
+  },
+  {
+    "title": "Mexican Nuggets",
+    "image": "https:\/\/lh3.googleusercontent.com\/utwYWmsaesbhw931nmjLjJ7bvIKlMJBnFHqnCs0SJJuja1NU0Yc-cjYzrPMI85_lu5asGcS5S84ovlhHKztB1w=s320-c-e365",
+    "favorites": 14,
+    "category": [
+      "gluten-free"
+    ]
+  },
+  {
+    "title": "Mashed Potato Stew",
+    "image": "http:\/\/res.cloudinary.com\/dormh2fvt\/image\/upload\/v1503873562\/clbf2jisa8gg3s6u1dgg.jpg",
+    "favorites": 5,
+    "category": [
+      "lunch-dinner",
+      "beef",
+      "pasta"
+    ]
+  },
+  {
+    "title": "Roast Chicken With Spring Vegetables",
+    "image": "https:\/\/lh3.googleusercontent.com\/ZR1oe_5O1fCvJSO_4Ndo1ZkQ3DOXG2xAF1HBPueJyl-W-ZJlrmJ5Ov5uotRTmc4zjbNirTekAb5o_arKVa6j=s320-c-e365",
+    "favorites": 4,
+    "category": [
+      "chicken",
+      "soup-stew"
+    ]
+  },
+  {
+    "title": "Coconut Panna Cotta",
+    "image": "https:\/\/lh3.googleusercontent.com\/hgTZLqbgjhCRJQaT7yf1pvny4Xg6hMytJTVBnCh8wkppI-0R6ieZDvfb9vKkJk_TyM9EKtG2JRFW2wCfZ4a26Yw",
+    "favorites": 1,
+    "category": [
+      "desserts"
+    ]
+  },
+  {
+    "title": "Mexican Bean Salad",
+    "image": "https:\/\/lh3.googleusercontent.com\/Vmy7hAS4iBRgUKIoklpKjlkgJvAqBd8C0B_XWRzhzDWE03aGfMnLS19Uw2uKj3MMRJEt6UM97zRa_oRUClzgCEk=s320-c-e365",
+    "favorites": 10,
+    "category": [
+      "salad",
+      "bread"
+    ]
+  },
+  {
+    "title": "Garlic Pita Bread Bites",
+    "image": "https:\/\/lh3.googleusercontent.com\/utwYWmsaesbhw931nmjLjJ7bvIKlMJBnFHqnCs0SJJuja1NU0Yc-cjYzrPMI85_lu5asGcS5S84ovlhHKztB1w=s320-c-e365",
+    "favorites": 7,
+    "category": [
+      "side-dishes"
+    ]
+  },
+  {
+    "title": "Parmesan Corn on the Cob",
+    "image": "https:\/\/lh3.googleusercontent.com\/ECYMb0bAROfJ8yqlS8NP3M8EH59DH8EK5XMLQNXSrBpS0IA0xwLbMu3gPkhtW-mllsRWMf7dCGztp4nP4bumTPM=s320-c-e365",
+    "favorites": 52,
+    "category": [
+      "milk-cheese"
+    ]
+  },
+  {
+    "title": "Mexican Nuggets",
+    "image": "https:\/\/lh3.googleusercontent.com\/utwYWmsaesbhw931nmjLjJ7bvIKlMJBnFHqnCs0SJJuja1NU0Yc-cjYzrPMI85_lu5asGcS5S84ovlhHKztB1w=s320-c-e365",
+    "favorites": 14,
+    "category": [
+      "gluten-free"
+    ]
+  },
+  {
+    "title": "Mashed Potato Stew",
+    "image": "http:\/\/res.cloudinary.com\/dormh2fvt\/image\/upload\/v1503873562\/clbf2jisa8gg3s6u1dgg.jpg",
+    "favorites": 5,
+    "category": [
+      "lunch-dinner",
+      "beef",
+      "pasta"
+    ]
+  },
+  {
+    "title": "Roast Chicken With Spring Vegetables",
+    "image": "https:\/\/lh3.googleusercontent.com\/ZR1oe_5O1fCvJSO_4Ndo1ZkQ3DOXG2xAF1HBPueJyl-W-ZJlrmJ5Ov5uotRTmc4zjbNirTekAb5o_arKVa6j=s320-c-e365",
+    "favorites": 4,
+    "category": [
+      "chicken",
+      "soup-stew"
+    ]
+  },
+  {
+    "title": "Coconut Panna Cotta",
+    "image": "https:\/\/lh3.googleusercontent.com\/hgTZLqbgjhCRJQaT7yf1pvny4Xg6hMytJTVBnCh8wkppI-0R6ieZDvfb9vKkJk_TyM9EKtG2JRFW2wCfZ4a26Yw",
+    "favorites": 1,
+    "category": [
+      "desserts"
+    ]
+  },
+  {
+    "title": "Mexican Bean Salad",
+    "image": "https:\/\/lh3.googleusercontent.com\/Vmy7hAS4iBRgUKIoklpKjlkgJvAqBd8C0B_XWRzhzDWE03aGfMnLS19Uw2uKj3MMRJEt6UM97zRa_oRUClzgCEk=s320-c-e365",
+    "favorites": 10,
+    "category": [
+      "salad",
+      "bread"
+    ]
+  },
+  {
+    "title": "Garlic Pita Bread Bites",
+    "image": "https:\/\/lh3.googleusercontent.com\/utwYWmsaesbhw931nmjLjJ7bvIKlMJBnFHqnCs0SJJuja1NU0Yc-cjYzrPMI85_lu5asGcS5S84ovlhHKztB1w=s320-c-e365",
+    "favorites": 7,
+    "category": [
+      "side-dishes"
+    ]
+  },
+  {
+    "title": "Parmesan Corn on the Cob",
+    "image": "https:\/\/lh3.googleusercontent.com\/ECYMb0bAROfJ8yqlS8NP3M8EH59DH8EK5XMLQNXSrBpS0IA0xwLbMu3gPkhtW-mllsRWMf7dCGztp4nP4bumTPM=s320-c-e365",
+    "favorites": 52,
+    "category": [
+      "milk-cheese"
+    ]
+  },
+  {
+    "title": "Mexican Nuggets",
+    "image": "https:\/\/lh3.googleusercontent.com\/utwYWmsaesbhw931nmjLjJ7bvIKlMJBnFHqnCs0SJJuja1NU0Yc-cjYzrPMI85_lu5asGcS5S84ovlhHKztB1w=s320-c-e365",
+    "favorites": 14,
+    "category": [
+      "gluten-free"
+    ]
+  },
+  {
+    "title": "Mashed Potato Stew",
+    "image": "http:\/\/res.cloudinary.com\/dormh2fvt\/image\/upload\/v1503873562\/clbf2jisa8gg3s6u1dgg.jpg",
+    "favorites": 5,
+    "category": [
+      "lunch-dinner",
+      "beef",
+      "pasta"
+    ]
+  },
+  {
+    "title": "Roast Chicken With Spring Vegetables",
+    "image": "https:\/\/lh3.googleusercontent.com\/ZR1oe_5O1fCvJSO_4Ndo1ZkQ3DOXG2xAF1HBPueJyl-W-ZJlrmJ5Ov5uotRTmc4zjbNirTekAb5o_arKVa6j=s320-c-e365",
+    "favorites": 4,
+    "category": [
+      "chicken",
+      "soup-stew"
+    ]
+  },
+  {
+    "title": "Coconut Panna Cotta",
+    "image": "https:\/\/lh3.googleusercontent.com\/hgTZLqbgjhCRJQaT7yf1pvny4Xg6hMytJTVBnCh8wkppI-0R6ieZDvfb9vKkJk_TyM9EKtG2JRFW2wCfZ4a26Yw",
+    "favorites": 1,
+    "category": [
+      "desserts"
+    ]
+  },
+  {
+    "title": "Mexican Bean Salad",
+    "image": "https:\/\/lh3.googleusercontent.com\/Vmy7hAS4iBRgUKIoklpKjlkgJvAqBd8C0B_XWRzhzDWE03aGfMnLS19Uw2uKj3MMRJEt6UM97zRa_oRUClzgCEk=s320-c-e365",
+    "favorites": 10,
+    "category": [
+      "salad",
+      "bread"
+    ]
+  },
+  {
+    "title": "Garlic Pita Bread Bites",
+    "image": "https:\/\/lh3.googleusercontent.com\/utwYWmsaesbhw931nmjLjJ7bvIKlMJBnFHqnCs0SJJuja1NU0Yc-cjYzrPMI85_lu5asGcS5S84ovlhHKztB1w=s320-c-e365",
+    "favorites": 7,
+    "category": [
+      "side-dishes"
+    ]
+  },
+  {
+    "title": "Parmesan Corn on the Cob",
+    "image": "https:\/\/lh3.googleusercontent.com\/ECYMb0bAROfJ8yqlS8NP3M8EH59DH8EK5XMLQNXSrBpS0IA0xwLbMu3gPkhtW-mllsRWMf7dCGztp4nP4bumTPM=s320-c-e365",
+    "favorites": 52,
+    "category": [
+      "milk-cheese"
+    ]
+  },
+  {
+    "title": "Mexican Nuggets",
+    "image": "https:\/\/lh3.googleusercontent.com\/utwYWmsaesbhw931nmjLjJ7bvIKlMJBnFHqnCs0SJJuja1NU0Yc-cjYzrPMI85_lu5asGcS5S84ovlhHKztB1w=s320-c-e365",
+    "favorites": 14,
+    "category": [
+      "gluten-free"
+    ]
+  }
+]

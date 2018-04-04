@@ -29,12 +29,20 @@ export default {
     }
   },
   created() {
-    const category = (window.location.search.match(/\?category=(.+)/) || [])[1];
-
-    this.$http.get(`http://localhost:3000/api/recipes/categories?category=${category}`)
+    const category = window.location.pathname.replace('/category/', '');
+    this.$http.get(`http://localhost:3000/api/recipes/category/${category}`)
     .then(data => {
       this.recipes = data.body;
     })
+  },
+  watch: {
+    '$route.params': function({ category }) {
+      this.recipes = [];
+      this.$http.get(`http://localhost:3000/api/recipes/category/${category}`)
+      .then(data => {
+        this.recipes = data.body;
+      })
+    }
   }
 }
 </script>
