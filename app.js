@@ -47,19 +47,15 @@ app.listen(process.env.PORT || 3000, () => {
 
 // All Recipes
 app.get('/api/recipes', (req, res) => {
-
-  const page = req.query.page || 1;
-  console.log('PAGE!!!', page);
-
-  Recipe.paginate({}, { page: page, limit: 10 }, (err, data) => {
-    console.log('paginating!', data);
+  const page = req.query.page;
+  Recipe.paginate({}, { page: page, limit: 12, sort: { creationDate: -1 }}, (err, data) => {
     res.json({
       totalPages: data.pages,
+      totalRecipes: data.total,
       recipes: data.docs,
     });
   });
 });
-
 
 
 // Searched Recipes
@@ -88,9 +84,12 @@ app.get('/api/recipes/most-popular', (req, res) => {
 // Recipe Categories
 app.get('/api/recipes/category/:category', (req, res) => {
   const { category } = req.params;
-
-  Recipe.find({ category: category }).exec((err, recipes) => {
-    res.json(recipes);
+  const page = req.query.page;
+  Recipe.paginate({ category: category }, { page: page, limit: 12, sort: { creationDate: -1 }}, (err, data) => {
+    res.json({
+      totalPages: data.pages,
+      totalRecipes: data.total,
+      recipes: data.docs,
+    });
   });
 });
-

@@ -1,8 +1,16 @@
 <template>
   <div id="show-recipes">
-    <h2>Category</h2>
+
+    <div id="search">
+      <form id="search-form" v-on:submit.prevent="search">
+        <span id="search-icon"></span>
+        <input type="text" id="search-form-input" placeholder="Search Recipes" autocomplete="off">
+      </form>
+    </div>
+
+    <h2 id="recipes-title">{{ categories[this.getCategory()] }}</h2><span>({{ totalRecipes }})</span>
     <ul class="recipe-list">
-      <li class="recipe-card" v-for="recipe in recipes">
+      <li class="recipe-card" v-for="recipe in recipes" v-bind:data-recipe-id="recipe._id">
         <div class="recipe-like">
           <span class="recipe-like-count">{{ recipe.favorites }}</span>
           <svg class="heart" viewBox="0 0 32 32">
@@ -16,6 +24,7 @@
         </div>
       </li>
     </ul>
+    <a id="show-more" href="#" class="btn btn-orange" v-show="pageCounter < totalPages" v-on:click.prevent="getRecipes">Show More</a>
   </div>
 </template>
 
@@ -23,25 +32,40 @@
 
 <script>
 export default {
+  props: ['categories'],
   data() {
     return {
       recipes: [],
+      pageCounter: 0,
+      totalPages: 0,
+      totalRecipes: 0,
+      recipesTitle: '',
+      category: this.getCategory(),
     }
   },
   created() {
-    const category = window.location.pathname.replace('/category/', '');
-    this.$http.get(`http://localhost:3000/api/recipes/category/${category}`)
-    .then(data => {
-      this.recipes = data.body;
-    })
+    this.getRecipes();
+  },
+  methods: {
+    getCategory() {
+      return window.location.pathname.replace('/category/', '');
+    },
+    getRecipes() {
+      this.pageCounter++;
+      this.$http.get(`http://localhost:3000/api/recipes/category/${this.category}?page=${this.pageCounter}`)
+      .then(data => {
+        this.recipes.push(...data.body.recipes);
+        this.totalPages = data.body.totalPages;
+        this.totalRecipes = data.body.totalRecipes;
+      });
+    },
   },
   watch: {
-    '$route.params': function({ category }) {
+    '$route.params': function() {
+      this.category = this.getCategory(),
       this.recipes = [];
-      this.$http.get(`http://localhost:3000/api/recipes/category/${category}`)
-      .then(data => {
-        this.recipes = data.body;
-      })
+      this.pageCounter = 0;
+      this.getRecipes();
     }
   }
 }

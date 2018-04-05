@@ -8,9 +8,9 @@
       </form>
     </div>
 
-    <h2>Recipes</h2>
+    <h2 id="recipes-title">{{ recipesTitle }}</h2><span>({{ totalRecipes }})</span>
     <ul class="recipe-list">
-      <li class="recipe-card" v-for="recipe in recipes">
+      <li class="recipe-card" v-for="recipe in recipes" v-bind:data-recipe-id="recipe._id">
         <div class="recipe-like">
           <span class="recipe-like-count">{{ recipe.favorites }}</span>
           <svg class="heart" viewBox="0 0 32 32">
@@ -24,6 +24,7 @@
         </div>
       </li>
     </ul>
+    <a id="show-more" href="#" class="btn btn-orange" v-show="pageCounter < totalPages" v-on:click.prevent="getRecipes">Show More</a>
   </div>
 </template>
 
@@ -34,59 +35,24 @@ export default {
   data() {
     return {
       recipes: [],
-      paginator: this.debounce(this.paginate, 150),
+      pageCounter: 0,
       totalPages: 0,
-      pageCounter: 1,
+      totalRecipes: 0,
+      recipesTitle: 'Recent Recipes',
     }
   },
   created() {
-    this.$http.get('http://localhost:3000/api/recipes')
-    .then(data => {
-      this.totalPages = data.body.totalPages;
-      this.recipes = data.body.recipes;
-    });
-
-    window.addEventListener('scroll', this.paginator);
-  },
-  destroyed() {
-    window.removeEventListener('scroll', this.paginator);
+    this.getRecipes();
   },
   methods: {
-    // search() {
-    //   console.log('seraching!');
-    //   this.$http.get('http://localhost:3000/api/recipes/search?term=Mexican')
-    //   .then(data => {
-    //     this.recipes = data.body;
-    //   })
-    // },
-    debounce(fn, wait, leading = false) {
-      let timeout;
-
-      return function(...args) {
-        function later() {
-          timeout = null;
-          if (!leading) fn(...args);
-        }
-
-        const callNow = leading && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) fn(...args);
-      };
-    },
-    paginate() {
-      if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
-        console.log('this.pageCounter', this.pageCounter);
-        console.log('this.totalPages', this.totalPages);
-
-        if (this.pageCounter < this.totalPages) {
-          this.pageCounter++;
-          this.$http.get(`http://localhost:3000/api/recipes?page=${this.pageCounter}`)
-          .then(data => {
-            this.recipes.push(...data.body.recipes);
-          });
-        }
-      }
+    getRecipes() {
+      this.pageCounter++;
+      this.$http.get(`http://localhost:3000/api/recipes?page=${this.pageCounter}`)
+      .then(data => {
+        this.recipes.push(...data.body.recipes);
+        this.totalPages = data.body.totalPages;
+        this.totalRecipes = data.body.totalRecipes;
+      });
     },
   }
 }
