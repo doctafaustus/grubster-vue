@@ -1,4 +1,6 @@
 const categories = {
+  '/': 'Recent Recipes',
+  '/most-popular': 'Most Popular',
   'appetizers-snacks': 'Appetizers & Snacks',
   'breakfast-brunch': 'Breakfast & Brunch',
   'desserts': 'Desserts',

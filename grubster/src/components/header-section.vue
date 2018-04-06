@@ -14,7 +14,7 @@
     
     <div id="bar-outer">
       <ul id="bar">
-        <li><router-link to="/recent">Recent</router-link></li>
+        <li><router-link to="/">Recent</router-link></li>
         <li><router-link to="/most-popular">Most Popular</router-link></li>
         <li id="categories">
           <a href="#">Categories</a>

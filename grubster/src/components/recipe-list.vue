@@ -8,7 +8,7 @@
       </form>
     </div>
 
-    <h2 id="recipes-title">{{ recipesTitle }}</h2><span>({{ totalRecipes }})</span>
+    <h2 id="recipes-title">{{ categories[this.getCategory()] }}</h2><span>({{ totalRecipes }})</span>
     <ul class="recipe-list">
       <li class="recipe-card" v-for="recipe in recipes" v-bind:data-recipe-id="recipe._id">
         <div class="recipe-like">
@@ -32,28 +32,54 @@
 
 <script>
 export default {
+  props: ['categories'],
   data() {
     return {
       recipes: [],
       pageCounter: 0,
       totalPages: 0,
       totalRecipes: 0,
-      recipesTitle: 'Recent Recipes',
+      recipesTitle: '',
+      category: this.getCategory(),
     }
   },
   created() {
     this.getRecipes();
   },
   methods: {
+    getCategory() {
+      return window.location.pathname.replace('/category/', '');
+    },
+    getEndpoint() {
+      let endPoint;
+      const path = window.location.pathname;
+      if (path.indexOf('/category/') > -1) {
+        endPoint = `category/${this.category}`;
+      } else if (path === '/') {
+        endPoint = '';
+      } else if (path === '/most-popular') {
+        endPoint = 'most-popular';
+      }
+      return endPoint;
+    },
     getRecipes() {
       this.pageCounter++;
-      this.$http.get(`http://localhost:3000/api/recipes?page=${this.pageCounter}`)
+      this.$http.get(`http://localhost:3000/api/recipes/${this.getEndpoint()}?page=${this.pageCounter}`)
       .then(data => {
         this.recipes.push(...data.body.recipes);
         this.totalPages = data.body.totalPages;
         this.totalRecipes = data.body.totalRecipes;
       });
     },
+  },
+  watch: {
+    '$route.params': function() {
+      this.category = this.getCategory();
+      console.log('category', this.category);
+      this.recipes = [];
+      this.pageCounter = 0;
+      this.getRecipes();
+    }
   }
 }
 </script>

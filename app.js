@@ -76,15 +76,22 @@ app.get('/api/recipes/recent', (req, res) => {
 
 // Most Popular Recipes
 app.get('/api/recipes/most-popular', (req, res) => {
-  Recipe.find({}).sort({ favorites: -1 }).exec((err, recipes) => {
-    res.json(recipes);
+  const { page } = req.query;
+
+  Recipe.paginate({}, { page: page, limit: 12, sort: { favorites: -1 }}, (err, data) => {
+    res.json({
+      totalPages: data.pages,
+      totalRecipes: data.total,
+      recipes: data.docs,
+    });
   });
 });
 
 // Recipe Categories
 app.get('/api/recipes/category/:category', (req, res) => {
   const { category } = req.params;
-  const page = req.query.page;
+  const { page } = req.query;
+
   Recipe.paginate({ category: category }, { page: page, limit: 12, sort: { creationDate: -1 }}, (err, data) => {
     res.json({
       totalPages: data.pages,
