@@ -212,7 +212,7 @@ header {
           padding-left: 12px;
         }
 
-        .heart{
+        .heart {
           width: 22px;
           height: 22px;
           fill: #ccc;
@@ -226,7 +226,7 @@ header {
           -o-transition: all .35s ease-out;
           transition: all .35s ease-out;
 
-          &:hover {
+          &:hover, &.favorited {
             fill: red;
             cursor: pointer;
           }

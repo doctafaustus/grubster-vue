@@ -13,7 +13,7 @@
       <li class="recipe-card" v-for="recipe in recipes" v-bind:data-recipe-id="recipe._id">
         <div class="recipe-like">
           <span class="recipe-like-count">{{ recipe.favorites }}</span>
-          <svg class="heart" viewBox="0 0 32 32">
+          <svg class="heart" viewBox="0 0 32 32" v-on:click="favorite($event)">
             <path d="M16,28.261c0,0-14-7.926-14-17.046c0-9.356,13.159-10.399,14-0.454c1.011-9.938,14-8.903,14,0.454 C30,20.335,16,28.261,16,28.261z"/>
           </svg> 
         </div>
@@ -47,6 +47,9 @@ export default {
     this.getRecipes();
   },
   methods: {
+    favorite(event) {
+      event.currentTarget.classList.add('favorited');
+    },
     getCategory() {
       return window.location.pathname.replace('/category/', '');
     },
