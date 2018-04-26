@@ -21,6 +21,7 @@ const schema = new mongoose.Schema({
   title: String,
   image: String,
   url: String,
+  favorites: Number,
   category: [String],
   creationDate: {type: Date, default: Date.now},
 });
@@ -30,7 +31,7 @@ const Recipe = mongoose.model('Recipe', schema);
 
 
 // Middleware
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   next();
@@ -97,6 +98,20 @@ app.get('/api/recipes/category/:category', (req, res) => {
       totalPages: data.pages,
       totalRecipes: data.total,
       recipes: data.docs,
+    });
+  });
+});
+
+// Update recipe
+app.post('/api/recipes/:recipeID', (req, res) => {
+  const { recipeID } = req.params;
+  console.log(recipeID);
+
+  Recipe.findOne({ _id: recipeID }, (err, recipe) => {
+    recipe.favorites++;
+    recipe.save(() => {
+      console.log('recipe saved!');
+      res.sendStatus(204);
     });
   });
 });

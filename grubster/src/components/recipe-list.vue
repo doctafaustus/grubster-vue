@@ -48,7 +48,14 @@ export default {
   },
   methods: {
     favorite(event) {
+      const recipeCard = event.currentTarget.closest('li');
+      const id = recipeCard.getAttribute('data-recipe-id');
+      const recipeLikeCountEl = recipeCard.querySelector('.recipe-like-count');
+      const recipeLikeCountNum = Number(recipeLikeCountEl.innerHTML);
+
+      recipeLikeCountEl.innerHTML = recipeLikeCountNum + 1;
       event.currentTarget.classList.add('favorited');
+      this.likeRecipe(id);
     },
     getCategory() {
       return window.location.pathname.replace('/category/', '');
@@ -74,6 +81,12 @@ export default {
         this.totalRecipes = data.body.totalRecipes;
       });
     },
+    likeRecipe(recipeID) {
+      this.$http.post(`http://localhost:3000/api/recipes/${recipeID}`, {a: 1}, {emulateJSON: true})
+      .then(data => {
+        console.log('done!', data);
+      });
+    }
   },
   watch: {
     '$route.params': function() {
