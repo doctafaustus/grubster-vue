@@ -5,7 +5,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     console.info('Response', response);
 
     // Populate input from response data
-    $('#recipe-name').val(response.name);
+    $('#recipe-title').val(response.title);
     $('#recipe-url').val(response.url);
 
     // Handle images
@@ -26,10 +26,10 @@ $('#submit-recipe').click(function() {
 
 	$.ajax({
 		type: 'POST',
-	  url: 'http://127.0.0.1:3000/',
+	  url: 'http://127.0.0.1:3000/api/extension',
 	  contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 	  data: { 
-      name: $('#recipe-name').val(),
+      title: $('#recipe-title').val(),
       url: $('#recipe-url').val(),
       image: $('#images .current img').attr('src'),
       mealType: $('#meal-type-category').val(),

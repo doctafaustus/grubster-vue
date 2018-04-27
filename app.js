@@ -50,11 +50,7 @@ app.listen(process.env.PORT || 3000, () => {
 app.get('/api/recipes', (req, res) => {
   const page = req.query.page;
   Recipe.paginate({}, { page: page, limit: 12, sort: { creationDate: -1 }}, (err, data) => {
-    res.json({
-      totalPages: data.pages,
-      totalRecipes: data.total,
-      recipes: data.docs,
-    });
+    sendRecipes(data, res);
   });
 });
 
@@ -68,23 +64,13 @@ app.get('/api/recipes/search', (req, res) => {
   });
 });
 
-// Recent Recipes
-app.get('/api/recipes/recent', (req, res) => {
-  Recipe.find({}).sort({ creationDate: -1 }).exec((err, recipes) => {
-    res.json(recipes);
-  });
-});
 
 // Most Popular Recipes
 app.get('/api/recipes/most-popular', (req, res) => {
   const { page } = req.query;
 
   Recipe.paginate({}, { page: page, limit: 12, sort: { favorites: -1 }}, (err, data) => {
-    res.json({
-      totalPages: data.pages,
-      totalRecipes: data.total,
-      recipes: data.docs,
-    });
+    sendRecipes(data, res);
   });
 });
 
@@ -94,18 +80,14 @@ app.get('/api/recipes/category/:category', (req, res) => {
   const { page } = req.query;
 
   Recipe.paginate({ category: category }, { page: page, limit: 12, sort: { creationDate: -1 }}, (err, data) => {
-    res.json({
-      totalPages: data.pages,
-      totalRecipes: data.total,
-      recipes: data.docs,
-    });
+    sendRecipes(data, res);
   });
 });
+
 
 // Update recipe
 app.post('/api/recipes/:recipeID', (req, res) => {
   const { recipeID } = req.params;
-  console.log(recipeID);
 
   Recipe.findOne({ _id: recipeID }, (err, recipe) => {
     recipe.favorites++;
@@ -115,3 +97,32 @@ app.post('/api/recipes/:recipeID', (req, res) => {
     });
   });
 });
+
+
+
+// Extension POST
+app.post('/api/extension', (req, res) => {
+  console.log('api/extension', req.body);
+
+  const recipe = new Recipe({
+    title: req.body.title,
+    image: req.body.image,
+    url: req.body.url,
+    favorites: 1,
+    //category: [String],
+  });
+
+  recipe.save((err, recipe) => {
+    console.log('new recipe addded!');
+    res.json(recipe);
+  });
+});
+
+
+function sendRecipes(data, res) {
+  res.json({
+    totalPages: data.pages,
+    totalRecipes: data.total,
+    recipes: data.docs,
+  });
+}
