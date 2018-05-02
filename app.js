@@ -1,13 +1,14 @@
 // Core Modules
 const express = require('express');
 const bodyParser = require('body-parser');
+const cloudinary = require('cloudinary');
+const fs = require('fs');
 
-
-// Express
+// Express Config
 const app = express();
 
 
-// Database
+// Database Config
 const mongoose = require('mongoose');
 const uriUtil = require('mongodb-uri');
 const mongoosePaginate = require('mongoose-paginate');
@@ -28,6 +29,15 @@ const schema = new mongoose.Schema({
 schema.plugin(mongoosePaginate);
 const Recipe = mongoose.model('Recipe', schema);
 
+
+// Cloudinary Config
+const cloudinarySecret = fs.readFileSync('./private/cloudinary_secret.txt').toString();
+cloudinary.config({ 
+  cloud_name: 'dormh2fvt', 
+  api_key: '778489856867779', 
+  api_secret: cloudinarySecret, 
+});
+const cloudinaryOptions = { gravity: 'center', height: 500, width: 500, crop: 'fill', };
 
 
 // Middleware
@@ -104,19 +114,27 @@ app.post('/api/recipes/:recipeID', (req, res) => {
 app.post('/api/extension', (req, res) => {
   console.log('api/extension', req.body);
 
-  const recipe = new Recipe({
-    title: req.body.title,
-    image: req.body.image,
-    url: req.body.url,
-    favorites: 1,
-    //category: [String],
-  });
 
-  recipe.save((err, recipe) => {
-    console.log('new recipe addded!');
-    res.json(recipe);
-  });
+  cloudinary.uploader.upload(req.body.image,
+    function(result) {
+
+      const recipe = new Recipe({
+        title: req.body.title,
+        image: result.secure_url,
+        url: req.body.url,
+        favorites: 1,
+        category: req.body.categories,
+      });
+
+      recipe.save((err, recipe) => {
+        console.log('New recipe addded!');
+        res.json(recipe);
+      });
+
+    }, cloudinaryOptions);
 });
+
+
 
 
 function sendRecipes(data, res) {

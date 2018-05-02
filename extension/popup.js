@@ -19,10 +19,14 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 });
 
 
-// Send recipe to Recipe Saver
+// Send recipe to App
 $('#submit-recipe').click(function() {
 
 	console.log('submitting recipe!');
+
+  // Filter categories for null values
+  var categories = [$('#meal-type-category').val(), $('#food-category').val(), $('#diet-category').val()];
+  categories = categories.filter(category => category);
 
 	$.ajax({
 		type: 'POST',
@@ -32,9 +36,7 @@ $('#submit-recipe').click(function() {
       title: $('#recipe-title').val(),
       url: $('#recipe-url').val(),
       image: $('#images .current img').attr('src'),
-      mealType: $('#meal-type-category').val(),
-      foodType: $('#food-category').val(),
-      dietCategory: $('#diet-category').val(),
+      categories: categories,
     },
 	  success: function(data) {
 	  	console.log('Sent!');
