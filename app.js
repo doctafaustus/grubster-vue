@@ -21,6 +21,7 @@ const schema = new mongoose.Schema({
   id: ObjectId,
   title: String,
   image: String,
+  host: String,
   url: String,
   favorites: Number,
   category: [String],
@@ -121,6 +122,7 @@ app.post('/api/extension', (req, res) => {
       const recipe = new Recipe({
         title: req.body.title,
         image: result.secure_url,
+        host: req.body.host,
         url: req.body.url,
         favorites: 1,
         category: req.body.categories,

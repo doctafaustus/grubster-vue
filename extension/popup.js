@@ -7,6 +7,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     // Populate input from response data
     $('#recipe-title').val(response.title);
     $('#recipe-url').val(response.url);
+    $('#recipe-host').val(response.host);
 
     // Handle images
     var imageSlides = '';
@@ -34,6 +35,7 @@ $('#submit-recipe').click(function() {
 	  contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 	  data: { 
       title: $('#recipe-title').val(),
+      host: $('#recipe-host').val(),
       url: $('#recipe-url').val(),
       image: $('#images .current img').attr('src'),
       categories: categories,

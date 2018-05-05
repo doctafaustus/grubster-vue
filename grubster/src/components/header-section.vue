@@ -7,8 +7,8 @@
       </router-link>
 
       <div id="header-right">
-        <a id="add-recipe" class="btn" href="#">Add Recipe</a>
-        <a id="login" class="btn" href="#">Login</a>
+        <a id="add-recipe" class="btn btn-orange" href="#">Add Recipe</a>
+        <a id="login" class="btn btn-orange" href="#">Login</a>
       </div>
     </header>
     
@@ -16,6 +16,7 @@
       <ul id="bar">
         <li><router-link to="/">Recent</router-link></li>
         <li><router-link to="/most-popular">Most Popular</router-link></li>
+        <li><a href="#">Favorites</a></li>
         <li id="categories">
           <a href="#">Categories</a>
           <div id="categories-dropdown">
@@ -52,7 +53,7 @@
             </ul>
           </div>
         </li>
-        <li><a href="#">Favorites</a></li>
+
       </ul>
     </div>
   </div>

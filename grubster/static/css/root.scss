@@ -13,7 +13,7 @@
 header {
   #logo {
     padding: 0 10px;
-    color: #00a4e4;
+    color: #fba924;
     letter-spacing: .01em;
     font-family: 'Baloo Tammudu', cursive;
     float: left;
@@ -27,6 +27,10 @@ header {
   #header-right {
     float: right;
     margin: 17px 14px 0 0;
+
+    a {
+      margin-left: 6px;
+    }
   }
 
   #search {
@@ -64,10 +68,11 @@ header {
 
 #bar-outer {
   clear: both;
-  background-color: #00a4e4;
-  padding: 16px 0 6px 0;
+  padding: 16px 0 2px 0;
   text-align: center;
   margin-bottom: 20px;
+  border-top: solid 1px #eaeaea;
+  border-bottom: solid 1px #eaeaea;
 
   #bar {
     display: inline-block;
@@ -77,23 +82,31 @@ header {
       display: inline-block;
 
       a {
-        color: white;
-        text-transform: uppercase;
+        color: black;
         font-size: 14px;
         font-weight: bold;
         letter-spacing: .2px;
-        margin: 12px;
-        border-bottom: solid 2px #3ecf83;
+        margin: 20px;
         padding-bottom: 2px;
 
         &:hover {
-          border-bottom: solid 2px #6772e5;
+          border-bottom: solid 2px #fbae32;
         }
       }
     }
 
     li#categories {
       padding-bottom: 16px;
+      margin-right: 26px;
+
+      > a {
+        &::after {
+          content: url(./assets/images/caret-down.jpg);
+          position: relative;
+          left: 6px;
+          top: -1px;
+        }
+      }
 
       #categories-dropdown {
         display: none;
@@ -116,11 +129,11 @@ header {
             display: list-item;
 
             &.category-title {
-              color: #6772e5;
               margin-bottom: 8px;
               text-transform: uppercase;
               font-weight: bold;
               padding-bottom: 8px;
+              font-size: 15px;
               border-bottom: solid 1px #c5c5c5;
             }
 
@@ -154,7 +167,7 @@ header {
 
     li#categories:hover {
       > a {
-        border-bottom: solid 2px #6772e5;
+        border-bottom: solid 2px #fbae32;
       }
 
       #categories-dropdown {
@@ -172,9 +185,36 @@ header {
   width: 1280px;
   margin: 0 auto;
 
-  #recipes-title {
+  #title-bar {
+    background-color: #3ecf83;
+    padding: 10px;
+    color: white;
     display: inline-block;
-    margin-right: 6px;
+    padding-right: 15px;
+    position: relative;
+
+    #recipes-title {
+      display: inline-block;
+      margin-right: 6px;
+      font-size: 16px;
+    }
+
+    &::after {
+      position: absolute;
+      content: '';
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 36px 0px 0px 32px;
+      border-color: transparent transparent transparent #3ecf83;
+      top: 0;
+      right: -32px;
+    }
+  }
+
+  #title-border {
+    border-top: solid 2px #3ecf83;
+    width: 1242px;
   }
 
   ul.recipe-list {
@@ -184,12 +224,12 @@ header {
     justify-content: flex-start;
     clear: both;
     box-sizing: border-box;
-    margin-top: 20px;
+    padding-top: 20px;
 
     li.recipe-card {
       position: relative;
       background-color: white;
-      margin: 0 35px 40px 0;
+      margin: 0 34px 40px 0;
       box-shadow: 1px 1px 6px rgba(0,0,0,0.2);
       width: 285px;
 
@@ -239,25 +279,32 @@ header {
         }
       }
 
-      .recipe-image {
-        img {
-          width: 100%;
-        }
-      }
+      .recipe-link {
+        color: black;
 
-      .recipe-card-bottom {
-        padding: 6px;
-
-        .recipe-title {
-          font-size: 15px;
-          line-height: 17px;
-          margin-bottom: 8px;
+        .recipe-image {
+          img {
+            width: 100%;
+          }
         }
 
-        .recipe-host {
-          font-size: 12px;
-          color: #979ce4;
-          padding-bottom: 2px;
+        .recipe-card-bottom {
+          padding: 6px 10px;
+
+          .recipe-title {
+            font-size: 15px;
+            line-height: 17px;
+            margin-bottom: 8px;
+            height: 36px;
+            overflow: hidden;
+            text-transform: capitalize;
+          }
+
+          .recipe-host {
+            font-size: 12px;
+            color: #00a4e4;
+            padding-bottom: 2px;
+          }
         }
       }
     }
