@@ -70,7 +70,7 @@ export default {
       const path = window.location.pathname;
       if (path.indexOf('/category/') > -1) {
         endPoint = `category/${this.category}`;
-      } else if (path === '/') {
+      } else if (path === '/' || path === '/callback') {
         endPoint = '';
       } else if (path === '/most-popular') {
         endPoint = 'most-popular';

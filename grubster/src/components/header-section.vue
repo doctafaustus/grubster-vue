@@ -8,7 +8,7 @@
 
       <div id="header-right">
         <a id="add-recipe" class="btn btn-orange" href="#">Add Recipe</a>
-        <a id="login" class="btn btn-orange" href="#">Login</a>
+        <a id="login" class="btn btn-orange" href="#" v-on:click.prevent="login">Login</a>
       </div>
     </header>
     
@@ -66,6 +66,6 @@ export default {
   data() {
     return {
     }
-  },
+  }
 }
 </script>

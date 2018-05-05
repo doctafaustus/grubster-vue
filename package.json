@@ -1,0 +1,16 @@
+{
+  "name": "Grubster-Vue",
+  "version": "1.0.0",
+  "author": "doctafaustus <clowd150@gmail.com>",
+  "dependencies": {
+    "auth0-js": "^9.5.1",
+    "auth0-lock": "^11.6.1",
+    "body-parser": "^1.18.2",
+    "cloudinary": "^1.11.0",
+    "eventemitter3": "^3.1.0",
+    "express": "^4.16.3",
+    "mongodb-uri": "^0.9.7",
+    "mongoose": "^5.0.17",
+    "mongoose-paginate": "^5.0.3"
+  }
+}

@@ -6,14 +6,20 @@
 </template>
 
 <script>
+import AuthService from './auth/AuthService';
 import headerSection from './components/header-section';
 import categories from './data/categories';
+
+
+window.x = new AuthService();
+//x.getProfile((err, prof) => { console.log(err, prof) });
+// User id is "sub"
 
 export default {
   name: 'App',
   data() {
     return {
-      categories,
+      categories
     };
   },
   components: {

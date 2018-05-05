@@ -137,8 +137,6 @@ app.post('/api/extension', (req, res) => {
 });
 
 
-
-
 function sendRecipes(data, res) {
   res.json({
     totalPages: data.pages,
@@ -146,3 +144,8 @@ function sendRecipes(data, res) {
     recipes: data.docs,
   });
 }
+
+
+
+
+
