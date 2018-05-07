@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <header-section/>
+    <header-section v-bind:auth="auth" />
     <router-view v-bind:categories="categories"/>
   </div>
 </template>
@@ -10,8 +10,9 @@ import AuthService from './auth/AuthService';
 import headerSection from './components/header-section';
 import categories from './data/categories';
 
+const auth = new AuthService();
+window.x = auth;
 
-window.x = new AuthService();
 //x.getProfile((err, prof) => { console.log(err, prof) });
 // User id is "sub"
 
@@ -19,7 +20,8 @@ export default {
   name: 'App',
   data() {
     return {
-      categories
+      categories,
+      auth,
     };
   },
   components: {

@@ -8,7 +8,7 @@
 
       <div id="header-right">
         <a id="add-recipe" class="btn btn-orange" href="#">Add Recipe</a>
-        <a id="login" class="btn btn-orange" href="#" v-on:click.prevent="login">Login</a>
+        <a id="login" class="btn btn-orange" href="#" v-on:click.prevent="login">Login / Register</a>
       </div>
     </header>
     
@@ -63,6 +63,21 @@
 
 <script>
 export default {
+  props: ['auth'],
+  created() {
+    const isLoggedIn = this.auth.isAuthenticated();
+    if (!isLoggedIn) return console.log('User not logged in');
+    this.auth.getProfile((err, profile) => {
+      console.log('profile', profile);
+
+      // Make ajax request to determine if user is not in DB, if not then add, otherwise just pull favorites
+    });
+  },
+  methods: {
+    login() {
+      this.auth.login();
+    }
+  },
   data() {
     return {
     }
