@@ -3,4 +3,5 @@ export const AUTH_CONFIG = {
   domain: 'grubster.auth0.com',
   callbackUrl: 'http://localhost:8080/callback',
   apiUrl: 'http://localhost:8080/api',
+  redirect_uri: 'http://localhost:8080/callback'
 }

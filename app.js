@@ -137,6 +137,16 @@ app.post('/api/extension', (req, res) => {
 });
 
 
+// User database
+app.post('/api/users/:subject', (req, res) => {
+  console.log('/users/:subject');
+
+  const { subject } = req.params;
+
+  // TODO: Enter user in DB
+  res.sendStatus(200);
+});
+
 function sendRecipes(data, res) {
   res.json({
     totalPages: data.pages,

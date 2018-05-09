@@ -25,6 +25,7 @@ export default class AuthService {
     autoclose: true,
     auth: {
       responseType: 'token id_token',
+      redirectUrl: AUTH_CONFIG.redirect_uri,
       params: {
         scope: 'openid profile read:messages'
       }

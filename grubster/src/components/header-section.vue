@@ -62,21 +62,31 @@
 
 
 <script>
+import poll from '../helper-functions/poll';
+
 export default {
   props: ['auth'],
   created() {
-    const isLoggedIn = this.auth.isAuthenticated();
-    if (!isLoggedIn) return console.log('User not logged in');
-    this.auth.getProfile((err, profile) => {
-      console.log('profile', profile);
+    if (window.location.pathname === '/callback') {
+      const self = this;
+      poll(self.auth.isAuthenticated, () => {
+        this.auth.getProfile((err, profile) => {
+          console.log('profile', profile);
 
-      // Make ajax request to determine if user is not in DB, if not then add, otherwise just pull favorites
-    });
+          this.$http.post(`http://localhost:3000/api/users/${profile.sub}`, {}, {emulateJSON: true})
+          .then(data => {
+            console.log('done!', data);
+          });
+
+        });
+      }, 50, 8000);
+    }
   },
   methods: {
     login() {
       this.auth.login();
-    }
+    },
+
   },
   data() {
     return {

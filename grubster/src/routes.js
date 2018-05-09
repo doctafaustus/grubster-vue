@@ -4,6 +4,6 @@ import recipeList from './components/recipe-list.vue';
 export default [
   { path: '/', 
     component: recipeList,
-    alias: ['/category/:category', '/most-popular']
+    alias: ['/callback', '/category/:category', '/most-popular']
   },
 ]
