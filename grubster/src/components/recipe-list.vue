@@ -1,6 +1,9 @@
 <template>
   <div id="show-recipes">
 
+    <div>Favorites: {{ userData.favorites }} </div>
+    <div>Use Vue conditional class to see if recipe is in favorites</div>
+
     <div id="search">
       <form id="search-form" v-on:submit.prevent="search">
         <span id="search-icon"></span>
@@ -37,7 +40,7 @@
 
 <script>
 export default {
-  props: ['categories'],
+  props: ['categories', 'userData'],
   data() {
     return {
       recipes: [],

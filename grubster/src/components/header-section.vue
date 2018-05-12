@@ -8,7 +8,8 @@
 
       <div id="header-right">
         <a id="add-recipe" class="btn btn-orange" href="#">Add Recipe</a>
-        <a id="login" class="btn btn-orange" href="#" v-on:click.prevent="login">Login / Register</a>
+        <a id="login" class="btn btn-orange" href="#" v-on:click.prevent="login">{{ loginButtonText }}</a>
+        <p>Sub: {{ sub }}</p>
       </div>
     </header>
     
@@ -53,7 +54,6 @@
             </ul>
           </div>
         </li>
-
       </ul>
     </div>
   </div>
@@ -62,34 +62,29 @@
 
 
 <script>
-import poll from '../helper-functions/poll';
+
 
 export default {
-  props: ['auth'],
+  props: ['userData'],
   created() {
-    if (window.location.pathname === '/callback') {
-      const self = this;
-      poll(self.auth.isAuthenticated, () => {
-        this.auth.getProfile((err, profile) => {
-          console.log('profile', profile);
-
-          this.$http.post(`http://localhost:3000/api/users/${profile.sub}`, {}, {emulateJSON: true})
-          .then(data => {
-            console.log('done!', data);
-          });
-
-        });
-      }, 50, 8000);
-    }
+    console.log('this.loginDataxxx', this.userData.loginButtonText)
   },
   methods: {
     login() {
-      this.auth.login();
+      this.$parent.$emit('login');
     },
-
+  },
+  watch: {
+    userData(newVal, oldVal) {
+      this.loginButtonText = newVal.loginButtonText;
+      this.sub = newVal.sub;
+    },
   },
   data() {
     return {
+      loginButtonText: 'Login / Register',
+      sub: null,
+      favorites: [],
     }
   }
 }

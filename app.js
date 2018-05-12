@@ -17,7 +17,17 @@ const ObjectId = Schema.ObjectId;
 const dbOptions = { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }, replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } } };
 mongoose.Promise = global.Promise; // Removes deprecation warning
 mongoose.connect('mongodb://localhost/grubster');
-const schema = new mongoose.Schema({
+
+
+const userSchema = new mongoose.Schema({
+  _id: String,
+  nickname: String,
+  favorites: [String],
+  creationDate: {type: Date, default: Date.now},
+});
+const User = mongoose.model('User', userSchema);
+
+const recipeSchema = new mongoose.Schema({
   id: ObjectId,
   title: String,
   image: String,
@@ -27,8 +37,8 @@ const schema = new mongoose.Schema({
   category: [String],
   creationDate: {type: Date, default: Date.now},
 });
-schema.plugin(mongoosePaginate);
-const Recipe = mongoose.model('Recipe', schema);
+recipeSchema.plugin(mongoosePaginate);
+const Recipe = mongoose.model('Recipe', recipeSchema);
 
 
 // Cloudinary Config
@@ -96,9 +106,10 @@ app.get('/api/recipes/category/:category', (req, res) => {
 });
 
 
-// Update recipe
+// Favorite recipe
 app.post('/api/recipes/:recipeID', (req, res) => {
   const { recipeID } = req.params;
+  const { user } = req.query;
 
   Recipe.findOne({ _id: recipeID }, (err, recipe) => {
     recipe.favorites++;
@@ -142,9 +153,27 @@ app.post('/api/users/:subject', (req, res) => {
   console.log('/users/:subject');
 
   const { subject } = req.params;
+  const { nickname } = req.query; 
 
-  // TODO: Enter user in DB
-  res.sendStatus(200);
+  User.findOne({ '_id': subject }, (err, user) => {
+    if (user) {
+      console.log('Found user', user);
+      res.json(user);
+    } else { // User not found, create new user
+      console.log('Creating new user');
+      const newUser = new User();
+
+      newUser._id = subject;
+      newUser.nickname = nickname;
+
+      newUser.save((err, user) => {
+        if (err) console.log(err);
+        console.log('User saved!', user);
+        res.json(user);
+      });
+    }
+  });
+
 });
 
 function sendRecipes(data, res) {

@@ -69,13 +69,14 @@ export default class AuthService {
     })
   }
 
-  logout () {
+  logout (cb) {
     // Clear access token and ID token from local storage
     localStorage.removeItem('access_token')
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
     this.userProfile = null
     this.authNotifier.emit('authChange', false)
+    if (cb) cb();
   }
 
   isAuthenticated () {
