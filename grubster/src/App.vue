@@ -30,8 +30,10 @@ export default {
           self.userData = {
             loginButtonText: 'Logout',
             sub: data.body._id,
-            favorites: data.body.favorites, 
           };
+
+          window.favorites = data.body.favorites;
+          self.$children[1].markFavorites();
         });
 
       });

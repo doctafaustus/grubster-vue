@@ -66,9 +66,6 @@
 
 export default {
   props: ['userData'],
-  created() {
-    console.log('this.loginDataxxx', this.userData.loginButtonText)
-  },
   methods: {
     login() {
       this.$parent.$emit('login');

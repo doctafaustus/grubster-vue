@@ -16,7 +16,7 @@
     </div>
     <div id="title-border"></div>
     <ul class="recipe-list">
-      <li class="recipe-card" v-for="recipe in recipes" v-bind:data-recipe-id="recipe._id">
+      <li class="recipe-card" v-for="recipe in recipes" v-bind:data-recipe-id="recipe._id" ref="recipe-card">
         <div class="recipe-like">
           <span class="recipe-like-count">{{ recipe.favorites }}</span>
           <svg class="heart" viewBox="0 0 32 32" v-on:click="favorite($event)">
@@ -56,14 +56,40 @@ export default {
   },
   methods: {
     favorite(event) {
-      const recipeCard = event.currentTarget.closest('li');
+
+      // TODO: If not logged in then prompt for sign up modal
+
+      const heartEl = event.currentTarget;
+      const recipeCard = heartEl.closest('li');
       const id = recipeCard.getAttribute('data-recipe-id');
       const recipeLikeCountEl = recipeCard.querySelector('.recipe-like-count');
       const recipeLikeCountNum = Number(recipeLikeCountEl.innerHTML);
 
-      recipeLikeCountEl.innerHTML = recipeLikeCountNum + 1;
-      event.currentTarget.classList.add('favorited');
-      this.likeRecipe(id);
+      if (heartEl.classList.contains('favorited')) {
+        console.log('already facorited');
+      } else {
+        console.log('favoriting...');
+        recipeLikeCountEl.innerHTML = recipeLikeCountNum + 1;
+        heartEl.classList.add('favorited');
+
+        this.$http.post(`http://localhost:3000/api/favorites/add/${this.userData.sub}?recipeID=${id}`, {a: 1}, {emulateJSON: true})
+        .then(data => {
+          console.log('done!', data);
+        });
+      }
+    },
+    markFavorites() {
+
+      if (!window.favorites) return;
+      const cards = this.$refs['recipe-card'];
+
+      cards.forEach(card => {
+        const recipeID = card.getAttribute('data-recipe-id');
+        if (window.favorites.includes(recipeID)) {
+          card.querySelector('.heart').classList.add('favorited');
+        }
+      });
+
     },
     getCategory() {
       return window.location.pathname.replace('/category/', '');
@@ -88,12 +114,6 @@ export default {
         this.totalPages = data.body.totalPages;
         this.totalRecipes = data.body.totalRecipes;
       });
-    },
-    likeRecipe(recipeID) {
-      this.$http.post(`http://localhost:3000/api/recipes/${recipeID}`, {a: 1}, {emulateJSON: true})
-      .then(data => {
-        console.log('done!', data);
-      });
     }
   },
   watch: {
@@ -104,6 +124,11 @@ export default {
       this.pageCounter = 0;
       this.getRecipes();
     }
+  },
+  updated: function () {
+    this.$nextTick(function () {
+      this.markFavorites();
+    });
   }
 }
 </script>

@@ -148,7 +148,7 @@ app.post('/api/extension', (req, res) => {
 });
 
 
-// User database
+// Add / find users
 app.post('/api/users/:subject', (req, res) => {
   console.log('/users/:subject');
 
@@ -174,6 +174,28 @@ app.post('/api/users/:subject', (req, res) => {
     }
   });
 
+});
+
+// Add / remove favorites
+app.post('/api/favorites/add/:subject', (req, res) => {
+
+  const { subject } = req.params;
+  const { recipeID } = req.query;
+
+  User.findOne({ '_id': subject }, (err, user) => {
+    const userFavorites = user.favorites;
+
+    if (userFavorites.indexOf() === -1) {
+      user.favorites.push(recipeID);
+      user.save((err, user) => {
+        console.log(recipeID + ' added to favorites!');
+        res.sendStatus(200);
+      });
+    } else {
+      console.log('recipe already in favorites');
+      res.sendStatus(200);
+    }
+  });
 });
 
 function sendRecipes(data, res) {
