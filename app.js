@@ -4,9 +4,11 @@ const bodyParser = require('body-parser');
 const cloudinary = require('cloudinary');
 const fs = require('fs');
 
+
 // Express Config
 const app = express();
-
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session);
 
 // Database Config
 const mongoose = require('mongoose');
@@ -41,6 +43,23 @@ recipeSchema.plugin(mongoosePaginate);
 const Recipe = mongoose.model('Recipe', recipeSchema);
 
 
+// Configure MongoStore options
+// This enables users to stay logged in even if the server goes down
+let mongoStoreOptions;
+if (!process.env.PORT) {
+  mongoStoreOptions = {
+    url: 'mongodb://localhost/grubster',
+  };
+} else {
+  mongoStoreOptions = {
+    url: process.env.MONGODB_URI,
+    ttl: 365 * 24 * 60 * 60,
+  };
+}
+
+
+
+
 // Cloudinary Config
 const cloudinarySecret = fs.readFileSync('./private/cloudinary_secret.txt').toString();
 cloudinary.config({ 
@@ -55,10 +74,18 @@ const cloudinaryOptions = { gravity: 'center', height: 500, width: 500, crop: 'f
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
 });
 
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
+app.use(session({
+  secret: 'keyboard cat',
+  cookie: { maxAge: 31556952000, secure: false, },
+  resave: true,
+  saveUninitialized: true,
+  store: new MongoStore(mongoStoreOptions),
+}));
 
 
 // Listen
@@ -69,6 +96,7 @@ app.listen(process.env.PORT || 3000, () => {
 
 // All Recipes
 app.get('/api/recipes', (req, res) => {
+
   const page = req.query.page;
   Recipe.paginate({}, { page: page, limit: 12, sort: { creationDate: -1 }}, (err, data) => {
     sendRecipes(data, res);
@@ -94,6 +122,21 @@ app.get('/api/recipes/most-popular', (req, res) => {
     sendRecipes(data, res);
   });
 });
+
+// Favorite Recipes
+app.get('/api/recipes/favorites', (req, res) => {
+  const { page } = req.query;
+
+  User.findOne({ '_id': req.session.sub }, (err, user) => {
+    const userFavorites = user.favorites;
+
+    Recipe.paginate({ _id: { $in: userFavorites }}, { page: page, limit: 50, sort: { favorites: -1 }}, (err, data) => {
+      sendRecipes(data, res);
+    });
+  });
+
+});
+
 
 // Recipe Categories
 app.get('/api/recipes/category/:category', (req, res) => {
@@ -155,6 +198,8 @@ app.post('/api/users/:subject', (req, res) => {
   const { subject } = req.params;
   const { nickname } = req.query; 
 
+  req.session.sub = subject;
+
   User.findOne({ '_id': subject }, (err, user) => {
     if (user) {
       console.log('Found user', user);
@@ -176,8 +221,9 @@ app.post('/api/users/:subject', (req, res) => {
 
 });
 
-// Add / remove favorites
+// Add Favorite
 app.post('/api/favorites/add/:subject', (req, res) => {
+  console.log('/api/favorites/add/:subject');
 
   const { subject } = req.params;
   const { recipeID } = req.query;
@@ -189,14 +235,32 @@ app.post('/api/favorites/add/:subject', (req, res) => {
       user.favorites.push(recipeID);
       user.save((err, user) => {
         console.log(recipeID + ' added to favorites!');
-        res.sendStatus(200);
+        res.json(user.favorites);
       });
     } else {
       console.log('recipe already in favorites');
-      res.sendStatus(200);
+      res.json(user.favorites);
     }
   });
 });
+
+
+// Remove Favorite
+app.post('/api/favorites/remove/:subject', (req, res) => {
+  console.log('/api/favorites/remove/:subject');
+
+  const { subject } = req.params;
+  const { recipeID } = req.query;
+
+  User.findOne({ '_id': subject }, (err, user) => {
+    user.favorites = user.favorites.filter(favorite => favorite !== recipeID);
+    user.save((err, user) => {
+      console.log(recipeID + ' removed from favorites!');
+      res.json(user.favorites);
+    });
+  });
+});
+
 
 function sendRecipes(data, res) {
   res.json({

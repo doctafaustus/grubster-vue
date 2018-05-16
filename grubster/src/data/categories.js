@@ -1,5 +1,7 @@
 const categories = {
   '/': 'Recent Recipes',
+  '/callback': 'Recent Recipes',
+  '/favorites': 'Favorte Recipes',
   '/most-popular': 'Most Popular',
   'appetizers-snacks': 'Appetizers & Snacks',
   'breakfast-brunch': 'Breakfast & Brunch',

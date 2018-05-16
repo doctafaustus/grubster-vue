@@ -9,6 +9,8 @@ import routes from './routes';
 Vue.use(VueResource);
 Vue.use(VueRouter);
 
+Vue.http.options.credentials = true;
+
 const router = new VueRouter({
   routes: routes,
   mode: 'history',

@@ -1,9 +1,5 @@
 <template>
   <div id="show-recipes">
-
-    <div>Favorites: {{ userData.favorites }} </div>
-    <div>Use Vue conditional class to see if recipe is in favorites</div>
-
     <div id="search">
       <form id="search-form" v-on:submit.prevent="search">
         <span id="search-icon"></span>
@@ -66,20 +62,24 @@ export default {
       const recipeLikeCountNum = Number(recipeLikeCountEl.innerHTML);
 
       if (heartEl.classList.contains('favorited')) {
-        console.log('already facorited');
+        recipeLikeCountEl.innerHTML = recipeLikeCountNum - 1;
+        heartEl.classList.remove('favorited');
+
+        this.$http.post(`http://localhost:3000/api/favorites/remove/${this.userData.sub}?recipeID=${id}`, {a: 1}, {emulateJSON: true})
+        .then(data => {
+          window.favorites = JSON.parse(data.bodyText);
+        });
       } else {
-        console.log('favoriting...');
         recipeLikeCountEl.innerHTML = recipeLikeCountNum + 1;
         heartEl.classList.add('favorited');
 
         this.$http.post(`http://localhost:3000/api/favorites/add/${this.userData.sub}?recipeID=${id}`, {a: 1}, {emulateJSON: true})
         .then(data => {
-          console.log('done!', data);
+          window.favorites = JSON.parse(data.bodyText);
         });
       }
     },
     markFavorites() {
-
       if (!window.favorites) return;
       const cards = this.$refs['recipe-card'];
 
@@ -89,7 +89,6 @@ export default {
           card.querySelector('.heart').classList.add('favorited');
         }
       });
-
     },
     getCategory() {
       return window.location.pathname.replace('/category/', '');
@@ -103,6 +102,8 @@ export default {
         endPoint = '';
       } else if (path === '/most-popular') {
         endPoint = 'most-popular';
+      } else if (path === '/favorites') {
+        endPoint = 'favorites';
       }
       return endPoint;
     },
