@@ -8,7 +8,7 @@
     </div>
 
     <div id="title-bar">
-      <h2 id="recipes-title">{{ categories[this.getCategory()] }}</h2><span>({{ totalRecipes }})</span>
+      <h2 id="recipes-title">{{ categories[this.getCategory()] }}</h2><span ref="recipes-num">({{ totalRecipes }})</span>
     </div>
     <div id="title-border"></div>
     <ul class="recipe-list">
@@ -68,6 +68,10 @@ export default {
         this.$http.post(`http://localhost:3000/api/favorites/remove/${this.userData.sub}?recipeID=${id}`, {a: 1}, {emulateJSON: true})
         .then(data => {
           window.favorites = JSON.parse(data.bodyText);
+          if (window.location.pathname == '/favorites') {
+            this.totalRecipes--;
+            recipeCard.remove();
+          }
         });
       } else {
         recipeLikeCountEl.innerHTML = recipeLikeCountNum + 1;

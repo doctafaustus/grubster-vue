@@ -1,3 +1,9 @@
+// Sign up modal for click favorites
+// Check for duplicate recipe entries
+// Automatically favorite when adding
+// Blank values for categorization
+
+
 // Core Modules
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -126,12 +132,21 @@ app.get('/api/recipes/most-popular', (req, res) => {
 // Favorite Recipes
 app.get('/api/recipes/favorites', (req, res) => {
   const { page } = req.query;
-
   User.findOne({ '_id': req.session.sub }, (err, user) => {
     const userFavorites = user.favorites;
 
-    Recipe.paginate({ _id: { $in: userFavorites }}, { page: page, limit: 50, sort: { favorites: -1 }}, (err, data) => {
-      sendRecipes(data, res);
+    // Not using paginate here to account for the user-defined user of favorites
+    Recipe.find({ _id: { $in: userFavorites }}, (err, data) => {
+      data.sort(function(a, b) {
+        return userFavorites.indexOf(a._id) - userFavorites.indexOf(b._id);
+      }).reverse();
+
+      sendRecipes({
+        pages: 1,
+        total: data.length,
+        docs: data,
+      }, res);
+
     });
   });
 
