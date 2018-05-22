@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  props: ['categories', 'userData'],
+  props: ['categories', 'userData', 'barColors'],
   data() {
     return {
       recipes: [],
@@ -50,11 +50,16 @@ export default {
   created() {
     this.getRecipes();
   },
+  mounted() {
+    this.updateColor();
+  },
   methods: {
+    updateColor() {
+      const color = this.barColors[window.location.pathname] ? this.barColors[window.location.pathname] : this.barColors['/categories'];
+      document.querySelector('#title-bar').setAttribute('style', `background-color: ${color};`);
+      document.querySelector('#title-border').setAttribute('style', `border-top: solid 2px ${color};`);
+    },
     favorite(event) {
-
-      // TODO: If not logged in then prompt for sign up modal
-
       const heartEl = event.currentTarget;
       const recipeCard = heartEl.closest('li');
       const id = recipeCard.getAttribute('data-recipe-id');
@@ -68,7 +73,7 @@ export default {
         this.$http.post(`http://localhost:3000/api/favorites/remove/${this.userData.sub}?recipeID=${id}`, {a: 1}, {emulateJSON: true})
         .then(data => {
           window.favorites = JSON.parse(data.bodyText);
-          if (window.location.pathname == '/favorites') {
+          if (window.location.pathname === '/favorites') {
             this.totalRecipes--;
             recipeCard.remove();
           }
@@ -128,6 +133,7 @@ export default {
       this.recipes = [];
       this.pageCounter = 0;
       this.getRecipes();
+      this.updateColor();
     }
   },
   updated: function () {

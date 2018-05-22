@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <header-section v-bind:userData="userData" />
-    <router-view v-bind:categories="categories" v-bind:userData="userData"/>
+    <header-section v-bind:userData="userData"/>
+    <router-view v-bind:categories="categories" v-bind:userData="userData" v-bind:barColors="barColors"/>
   </div>
 </template>
 
@@ -11,6 +11,7 @@ import poll from './helper-functions/poll';
 
 import headerSection from './components/header-section';
 import categories from './data/categories';
+import barColors from './data/bar-colors';
 
 
 const auth = new AuthService();
@@ -54,6 +55,7 @@ export default {
     return {
       categories,
       auth,
+      barColors,
       userData: {},
     };
   },

@@ -1,7 +1,9 @@
+// Check for duplicate recipe entries - IN PROGRESS
+// Extension POST success
 // Sign up modal for click favorites
-// Check for duplicate recipe entries
 // Automatically favorite when adding
 // Blank values for categorization
+// Leftover session state after logging in
 
 
 // Core Modules
@@ -132,10 +134,11 @@ app.get('/api/recipes/most-popular', (req, res) => {
 // Favorite Recipes
 app.get('/api/recipes/favorites', (req, res) => {
   const { page } = req.query;
+  
   User.findOne({ '_id': req.session.sub }, (err, user) => {
     const userFavorites = user.favorites;
 
-    // Not using paginate here to account for the user-defined user of favorites
+    // Not using paginate here to account for the user-defined order of favorites
     Recipe.find({ _id: { $in: userFavorites }}, (err, data) => {
       data.sort(function(a, b) {
         return userFavorites.indexOf(a._id) - userFavorites.indexOf(b._id);
@@ -182,27 +185,41 @@ app.post('/api/recipes/:recipeID', (req, res) => {
 
 // Extension POST
 app.post('/api/extension', (req, res) => {
-  console.log('api/extension', req.body);
+  console.log('api/extension');
 
+  // First check if recipe is already in database
+  Recipe.find({ url: req.body.url }, (err, recipes) => {
 
-  cloudinary.uploader.upload(req.body.image,
-    function(result) {
+    if (!recipes.length) {
 
-      const recipe = new Recipe({
-        title: req.body.title,
-        image: result.secure_url,
-        host: req.body.host,
-        url: req.body.url,
-        favorites: 1,
-        category: req.body.categories,
-      });
+      cloudinary.uploader.upload(req.body.image,
+        function(result) {
 
-      recipe.save((err, recipe) => {
-        console.log('New recipe addded!');
-        res.json(recipe);
-      });
+          const recipe = new Recipe({
+            title: req.body.title,
+            image: result.secure_url,
+            host: req.body.host,
+            url: req.body.url,
+            favorites: 1,
+            category: req.body.categories,
+          });
 
-    }, cloudinaryOptions);
+          recipe.save((err, recipe) => {
+            console.log('New recipe addded!');
+            res.json(recipe);
+          });
+
+        },
+      cloudinaryOptions);
+
+    } else {
+
+      console.log('This recipe already exists on Grubster but we\'ve added it to your favorites!');
+
+    }
+
+  });
+
 });
 
 
