@@ -91,6 +91,7 @@ export default {
     markFavorites() {
       if (!window.favorites) return;
       const cards = this.$refs['recipe-card'];
+      if (!cards) return;
 
       cards.forEach(card => {
         const recipeID = card.getAttribute('data-recipe-id');

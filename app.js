@@ -1,9 +1,12 @@
 // Check for duplicate recipe entries - IN PROGRESS
+// Extension recipe name validation
+// Default image
 // Extension POST success
 // Sign up modal for click favorites
 // Automatically favorite when adding
-// Blank values for categorization
 // Leftover session state after logging in
+// Flag for removal
+// Mobile layout
 
 
 // Core Modules

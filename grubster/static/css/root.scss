@@ -83,7 +83,7 @@ header {
 
       a {
         color: black;
-        font-size: 14px;
+        font-size: 15px;
         font-weight: bold;
         letter-spacing: .2px;
         margin: 20px;
@@ -114,7 +114,6 @@ header {
         width: 100%;
         padding: 20px;
         top: 32px;
-        left: 29px;
         background-color: white;
         z-index: 20;
         color: black;
@@ -293,7 +292,8 @@ header {
 
           .recipe-title {
             font-size: 15px;
-            line-height: 17px;
+            line-height: 19px;
+            padding-bottom: 2px;
             margin-bottom: 8px;
             height: 36px;
             overflow: hidden;
@@ -312,7 +312,7 @@ header {
 
   #show-more {
     display: block;
-    margin: 0 auto 40px auto;
+    margin: 0 auto 80px auto;
     width: 90px;
   }
 }
