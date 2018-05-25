@@ -1,7 +1,6 @@
 // Check for duplicate recipe entries - IN PROGRESS
 // Extension recipe name validation
 // Default image
-// Extension POST success
 // Sign up modal for click favorites
 // Automatically favorite when adding
 // Leftover session state after logging in
@@ -209,7 +208,7 @@ app.post('/api/extension', (req, res) => {
 
           recipe.save((err, recipe) => {
             console.log('New recipe addded!');
-            res.json(recipe);
+            res.json({ message: 'recipe added' });
           });
 
         },
@@ -217,8 +216,8 @@ app.post('/api/extension', (req, res) => {
 
     } else {
 
-      console.log('This recipe already exists on Grubster but we\'ve added it to your favorites!');
-
+      // TODO: Favorite recipe here
+      res.json({ message: 'favorited only' });
     }
 
   });

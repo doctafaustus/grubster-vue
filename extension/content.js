@@ -33,6 +33,10 @@ function getImages() {
 			return;
 		}
 
+		if (/\.svg$/.test(src)) {
+			return;
+		}
+
 		var dimensions = parseFloat($this.width()) * parseFloat($this.height());
 		imagesArray.push({ image: $this, dimensions: dimensions, src: src });
 	});

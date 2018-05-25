@@ -24,6 +24,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 $('#submit-recipe').click(function() {
 
 	console.log('submitting recipe!');
+  $('.sk-fading-circle, #overlay').show();
 
   // Filter categories for null values
   var categories = [$('#meal-type-category').val(), $('#food-category').val(), $('#diet-category').val()];
@@ -41,11 +42,21 @@ $('#submit-recipe').click(function() {
       categories: categories,
     },
 	  success: function(data) {
-	  	console.log('Sent!');
+      console.log('success', data);
+      $('#main').hide();
+
+      if (data.message === 'recipe added') {
+        $('#success-message, #home-link').show();
+      } else if (data.message === 'favorited only') {
+        $('#info-message, #home-link').show();
+      }
 	  },
 	  error: function(jqXHR) {
-	  	console.log('error');
-	  }
+	  	console.log('error', jqXHR);
+	  },
+    complete: function() {
+      $('.sk-fading-circle, #overlay').hide();
+    }
 	});
 });
 
