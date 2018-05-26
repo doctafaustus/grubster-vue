@@ -24,6 +24,13 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 $('#submit-recipe').click(function() {
 
 	console.log('submitting recipe!');
+  $('#recipe-title-validation').hide();
+
+  // Validate that a recipe name exists
+  if (!$('#recipe-title').val().length) {
+    return $('#recipe-title-validation').show();
+  }
+
   $('.sk-fading-circle, #overlay').show();
 
   // Filter categories for null values

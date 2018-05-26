@@ -1,6 +1,3 @@
-// Check for duplicate recipe entries - IN PROGRESS
-// Extension recipe name validation
-// Default image
 // Sign up modal for click favorites
 // Automatically favorite when adding
 // Leftover session state after logging in
@@ -77,7 +74,7 @@ cloudinary.config({
   api_key: '778489856867779', 
   api_secret: cloudinarySecret, 
 });
-const cloudinaryOptions = { gravity: 'center', height: 500, width: 500, crop: 'fill', };
+const cloudinaryOptions = { gravity: 'center', height: 285, width: 285, crop: 'fill', };
 
 
 // Middleware
@@ -199,7 +196,7 @@ app.post('/api/extension', (req, res) => {
 
           const recipe = new Recipe({
             title: req.body.title,
-            image: result.secure_url,
+            image: result.secure_url || 'http://res.cloudinary.com/dormh2fvt/image/upload/v1527317481/placeholder_rjy55k.jpg',
             host: req.body.host,
             url: req.body.url,
             favorites: 1,
