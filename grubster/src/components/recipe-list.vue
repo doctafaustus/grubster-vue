@@ -11,6 +11,7 @@
       <h2 id="recipes-title">{{ categories[this.getCategory()] }}</h2><span ref="recipes-num">({{ totalRecipes }})</span>
     </div>
     <div id="title-border"></div>
+
     <ul class="recipe-list">
       <li class="recipe-card" v-for="recipe in recipes" v-bind:data-recipe-id="recipe._id" ref="recipe-card">
         <div class="recipe-like">
@@ -19,15 +20,21 @@
             <path d="M16,28.261c0,0-14-7.926-14-17.046c0-9.356,13.159-10.399,14-0.454c1.011-9.938,14-8.903,14,0.454 C30,20.335,16,28.261,16,28.261z"/>
           </svg> 
         </div>
-        <a class="recipe-link" :href="recipe.url" target="_blank">
-          <div class="recipe-image"><img v-bind:src="recipe.image"></div>
-          <div class="recipe-card-bottom">
-            <div class="recipe-title">{{ recipe.title }}</div>
-            <div class="recipe-host">{{ recipe.host }}</div>
-          </div>
-        </a>
+        <div class="link-container">
+          <a class="recipe-link" :href="recipe.url" target="_blank">
+            <div class="recipe-image"><img v-bind:src="recipe.image"></div>
+            <div class="recipe-card-bottom">
+              <div class="recipe-title">{{ recipe.title }}</div>
+              <div class="recipe-host">{{ recipe.host }}</div>
+            </div>
+          </a>
+          <svg class="flag" v-on:click="flag">
+            <path d="M49.1,29.2c-10.4-5.2-18.7-4.5-18.7-4.5v46.6c0,0,3.9,0.7,3.9-1.7c0-2.4,0-19.9,0-19.9c2.2-0.7,6.1-1.4,14.8,4.3  c11.2,6.6,16.4-2,16.4-2V27.2C65.5,27.2,59.6,34.1,49.1,29.2z"/>
+          </svg>
+        </div>
       </li>
     </ul>
+
     <a id="show-more" href="#" class="btn btn-orange" v-show="pageCounter < totalPages" v-on:click.prevent="getRecipes">Show More</a>
   </div>
 </template>
@@ -54,6 +61,17 @@ export default {
     this.updateColor();
   },
   methods: {
+    flag(event) {
+
+      const target = event.target.classList.contains('flag') ? event.target : event.target.parentNode;
+      if (target.classList.contains('active')) return;
+      target.classList.add('active');
+      const flaggedMessage = document.createElement('div');
+      flaggedMessage.innerHTML = 'Recipe flagged for removal';
+      flaggedMessage.classList.add('flagged-message');
+      target.parentNode.appendChild(flaggedMessage);
+
+    },
     updateColor() {
       const color = this.barColors[window.location.pathname] ? this.barColors[window.location.pathname] : this.barColors['/categories'];
       document.querySelector('#title-bar').setAttribute('style', `background-color: ${color};`);

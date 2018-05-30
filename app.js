@@ -1,7 +1,7 @@
 // Sign up modal for click favorites
 // Automatically favorite when adding
 // Leftover session state after logging in
-// Flag for removal
+// Flag for removal - add flag counter
 // Mobile layout
 
 
