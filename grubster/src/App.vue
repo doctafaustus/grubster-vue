@@ -46,7 +46,12 @@ export default {
         this.auth.login();
       } else {
         this.auth.logout(() => {
-          window.location.pathname = '/';
+          // Destroy session server-side
+          this.$http.get('/api/logout')
+          .then(data => {
+            console.log('successful logout');
+            window.location.pathname = '/';
+          });
         });
       }
     });

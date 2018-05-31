@@ -1,8 +1,7 @@
 // Sign up modal for click favorites
 // Automatically favorite when adding
-// Leftover session state after logging in
-// Flag for removal - add flag counter
 // Mobile layout
+// Search recipes
 
 
 // Core Modules
@@ -44,6 +43,7 @@ const recipeSchema = new mongoose.Schema({
   url: String,
   favorites: Number,
   category: [String],
+  flag: Number,
   creationDate: {type: Date, default: Date.now},
 });
 recipeSchema.plugin(mongoosePaginate);
@@ -104,28 +104,30 @@ app.listen(process.env.PORT || 3000, () => {
 // All Recipes
 app.get('/api/recipes', (req, res) => {
 
+  console.log('req.session.sub', req.session.sub);
+
   const page = req.query.page;
-  Recipe.paginate({}, { page: page, limit: 12, sort: { creationDate: -1 }}, (err, data) => {
+  Recipe.paginate({ flag: { $lt: 3 }}, { page: page, limit: 12, sort: { creationDate: -1 }}, (err, data) => {
     sendRecipes(data, res);
   });
 });
 
 
 // Searched Recipes
-app.get('/api/recipes/search', (req, res) => {
-  const { term } = req.query;
+// app.get('/api/recipes/search', (req, res) => {
+//   const { term } = req.query;
 
-  Recipe.find({ title: { $regex: term, $options: 'i' } }, (err, recipes) => {
-    res.json(recipes);
-  });
-});
+//   Recipe.find({ title: { $regex: term, $options: 'i' } }, (err, recipes) => {
+//     res.json(recipes);
+//   });
+// });
 
 
 // Most Popular Recipes
 app.get('/api/recipes/most-popular', (req, res) => {
   const { page } = req.query;
 
-  Recipe.paginate({}, { page: page, limit: 12, sort: { favorites: -1 }}, (err, data) => {
+  Recipe.paginate({ flag: { $lt: 3 }}, { page: page, limit: 12, sort: { favorites: -1 }}, (err, data) => {
     sendRecipes(data, res);
   });
 });
@@ -160,7 +162,7 @@ app.get('/api/recipes/category/:category', (req, res) => {
   const { category } = req.params;
   const { page } = req.query;
 
-  Recipe.paginate({ category: category }, { page: page, limit: 12, sort: { creationDate: -1 }}, (err, data) => {
+  Recipe.paginate({ category: category, flag: { $lt: 3 }}, { page: page, limit: 12, sort: { creationDate: -1 }}, (err, data) => {
     sendRecipes(data, res);
   });
 });
@@ -200,6 +202,7 @@ app.post('/api/extension', (req, res) => {
             host: req.body.host,
             url: req.body.url,
             favorites: 1,
+            flag: 0,
             category: req.body.categories,
           });
 
@@ -252,6 +255,15 @@ app.post('/api/users/:subject', (req, res) => {
 
 });
 
+
+// Logout
+app.get('/api/logout', (req, res) => {
+  req.session.destroy(function(err) {
+    res.sendStatus(200);
+  });
+});
+
+
 // Add Favorite
 app.post('/api/favorites/add/:subject', (req, res) => {
   console.log('/api/favorites/add/:subject');
@@ -290,6 +302,20 @@ app.post('/api/favorites/remove/:subject', (req, res) => {
       res.json(user.favorites);
     });
   });
+});
+
+// Flag Recipe
+app.get('/api/flag/:recipeID', (req, res) => {
+  const { recipeID } = req.params;
+
+  Recipe.findOne({ '_id': recipeID }, (err, recipe) => {
+    recipe.flag++;
+    recipe.save(() => {
+      console.log('recipe saved!');
+      res.sendStatus(200);
+    });
+  });
+
 });
 
 

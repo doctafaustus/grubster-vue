@@ -65,11 +65,21 @@ export default {
 
       const target = event.target.classList.contains('flag') ? event.target : event.target.parentNode;
       if (target.classList.contains('active')) return;
+      const id = target.closest('li').getAttribute('data-recipe-id');
+
       target.classList.add('active');
       const flaggedMessage = document.createElement('div');
       flaggedMessage.innerHTML = 'Recipe flagged for removal';
       flaggedMessage.classList.add('flagged-message');
       target.parentNode.appendChild(flaggedMessage);
+
+      if (localStorage.getItem(`flag-${id}`)) return console.log('Recipe already flagged');
+      
+      this.$http.get(`http://localhost:3000/api/flag/${id}`)
+      .then(data => {
+        console.log('success');
+        localStorage.setItem(`flag-${id}`, true);
+      });
 
     },
     updateColor() {
