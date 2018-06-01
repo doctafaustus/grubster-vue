@@ -8,7 +8,7 @@
     </div>
 
     <div id="title-bar">
-      <h2 id="recipes-title">{{ categories[this.getCategory()] }}</h2><span ref="recipes-num">({{ totalRecipes }})</span>
+      <h2 id="recipes-title">{{ categories[this.getCategory()] || this.getSearchTerm() }}</h2><span ref="recipes-num">({{ totalRecipes }})</span>
     </div>
     <div id="title-border"></div>
 
@@ -61,6 +61,11 @@ export default {
     this.updateColor();
   },
   methods: {
+    getSearchTerm() {
+      const term = (window.location.pathname.match(/\/search\/(.+)/) || [])[1];
+      const decodedTerm = window.decodeURIComponent(term);
+      return `"${decodedTerm}" Results`;
+    },
     flag(event) {
 
       const target = event.target.classList.contains('flag') ? event.target : event.target.parentNode;
@@ -142,6 +147,8 @@ export default {
         endPoint = 'most-popular';
       } else if (path === '/favorites') {
         endPoint = 'favorites';
+      } else if (/^\/search\//.test(path)) {
+        endPoint = `search/${(path.match(/\/search\/(.+)/) || [])[1]}`;
       }
       return endPoint;
     },
@@ -152,6 +159,14 @@ export default {
         this.recipes.push(...data.body.recipes);
         this.totalPages = data.body.totalPages;
         this.totalRecipes = data.body.totalRecipes;
+      })
+      .catch(data => {
+        if (window.location.pathname === '/favorites') {
+          this.recipes = [];
+          this.totalPages = 0;
+          this.totalRecipes = 0;
+          this.$parent.$emit('login');
+        }
       });
     }
   },

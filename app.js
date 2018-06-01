@@ -1,7 +1,6 @@
-// Sign up modal for click favorites
 // Automatically favorite when adding
 // Mobile layout
-// Search recipes
+// Search recipes - format search bar
 
 
 // Core Modules
@@ -113,14 +112,15 @@ app.get('/api/recipes', (req, res) => {
 });
 
 
-// Searched Recipes
-// app.get('/api/recipes/search', (req, res) => {
-//   const { term } = req.query;
+// Search Recipes
+app.get('/api/recipes/search/:term', (req, res) => {
+  const { page } = req.query;
+  const { term } = req.params;
 
-//   Recipe.find({ title: { $regex: term, $options: 'i' } }, (err, recipes) => {
-//     res.json(recipes);
-//   });
-// });
+  Recipe.paginate({ flag: { $lt: 3 }, title: { $regex: term, $options: 'i' }}, { page: page, limit: 12, sort: { favorites: -1 }}, (err, data) => {
+    sendRecipes(data, res);
+  });
+});
 
 
 // Most Popular Recipes
@@ -135,8 +135,11 @@ app.get('/api/recipes/most-popular', (req, res) => {
 // Favorite Recipes
 app.get('/api/recipes/favorites', (req, res) => {
   const { page } = req.query;
-  
+
   User.findOne({ '_id': req.session.sub }, (err, user) => {
+
+    if (!user) return res.sendStatus(404);
+
     const userFavorites = user.favorites;
 
     // Not using paginate here to account for the user-defined order of favorites

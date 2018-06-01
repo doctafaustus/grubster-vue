@@ -2,11 +2,15 @@
   <div id="header-section">
     <header>
       <router-link id="logo" to="/">
-        <!-- <img src="/images/chef-hat.png"> -->
         <h1>grubster</h1>
       </router-link>
 
       <div id="header-right">
+        <form id="search-form" v-on:submit.prevent="submitSearch">
+          <input id="search-input" type="text" v-model="term">
+          <router-link v-bind:to="urlAction" ref="search-link-proxy" style="display: none;">Search Link Proxy</router-link>
+        </form>
+
         <a id="add-recipe" class="btn btn-orange" href="#">Add Recipe</a>
         <a id="login" class="btn btn-orange" href="#" v-on:click.prevent="login">{{ loginButtonText }}</a>
         <p>Sub: {{ sub }}</p>
@@ -70,6 +74,16 @@ export default {
     login() {
       this.$parent.$emit('login');
     },
+    submitSearch() {
+      if (!this.term.trim()) return;
+      this.$refs['search-link-proxy'].$el.click();
+      this.term = '';
+    }
+  },
+  computed: {
+    urlAction() {
+      return `/search/${this.term}`;
+    },
   },
   watch: {
     userData(newVal, oldVal) {
@@ -82,6 +96,7 @@ export default {
       loginButtonText: 'Login / Register',
       sub: null,
       favorites: [],
+      term: '',
     }
   }
 }
