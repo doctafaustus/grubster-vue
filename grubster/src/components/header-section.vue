@@ -7,13 +7,13 @@
 
       <div id="header-right">
         <form id="search-form" v-on:submit.prevent="submitSearch">
+          <span id="search-icon"></span>
           <input id="search-input" type="text" v-model="term">
           <router-link v-bind:to="urlAction" ref="search-link-proxy" style="display: none;">Search Link Proxy</router-link>
         </form>
 
         <a id="add-recipe" class="btn btn-orange" href="#">Add Recipe</a>
         <a id="login" class="btn btn-orange" href="#" v-on:click.prevent="login">{{ loginButtonText }}</a>
-        <p>Sub: {{ sub }}</p>
       </div>
     </header>
     

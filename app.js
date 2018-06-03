@@ -1,6 +1,5 @@
 // Automatically favorite when adding
-// Mobile layout
-// Search recipes - format search bar
+// Mobile layout - format header and categories submenu
 
 
 // Core Modules

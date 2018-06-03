@@ -1,12 +1,5 @@
 <template>
   <div id="show-recipes">
-    <div id="search">
-      <form id="search-form" v-on:submit.prevent="search">
-        <span id="search-icon"></span>
-        <input type="text" id="search-form-input" placeholder="Search Recipes" autocomplete="off">
-      </form>
-    </div>
-
     <div id="title-bar">
       <h2 id="recipes-title">{{ categories[this.getCategory()] || this.getSearchTerm() }}</h2><span ref="recipes-num">({{ totalRecipes }})</span>
     </div>
