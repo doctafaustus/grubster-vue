@@ -11,7 +11,7 @@ const fs = require('fs');
 
 // Express Config
 const app = express();
-const session = require('express-session')
+const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
 // Database Config

@@ -1,7 +1,21 @@
 <template>
   <div id="header-section">
+
+    <!-- Mobile Header -->
+    <div id="mobile-header">
+      <a id="burger-button" href="#">
+        <div id="burger-inner">
+          <hr><hr><hr>
+        </div>
+      </a>
+      <router-link class="logo" to="/">
+        <h1>grubster</h1>
+      </router-link>
+      <a id="mobile-search-button"><span></span></a>
+    </div>
+
     <header>
-      <router-link id="logo" to="/">
+      <router-link class="logo" to="/">
         <h1>grubster</h1>
       </router-link>
 
@@ -16,6 +30,7 @@
         <a id="login" class="btn btn-orange" href="#" v-on:click.prevent="login">{{ loginButtonText }}</a>
       </div>
     </header>
+
     
     <div id="bar-outer">
       <ul id="bar">

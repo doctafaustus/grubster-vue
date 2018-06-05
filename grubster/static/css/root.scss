@@ -11,7 +11,7 @@
 }
 
 header {
-  #logo {
+  .logo {
     padding: 0 10px;
     color: #fba924;
     letter-spacing: .01em;
@@ -59,6 +59,9 @@ header {
   }
 }
 
+#mobile-header {
+  display: none;
+}
 
 #bar-outer {
   clear: both;
@@ -627,8 +630,99 @@ header {
 }
 
 @media (max-width: 810px) {
+
+  #bar-outer {
+    display: none;
+  }
+
+
+  #header-section {
+    header {
+      display: none;
+    }
+
+    #mobile-header {
+      border: solid 1px #eaeaea;
+      display: flex;
+      text-align: center;
+      height: 60px;
+      margin-bottom: 22px;
+
+      #burger-button {
+        border-right: solid 1px #eaeaea;
+        width: 60px;
+        height: 60px;
+
+        #burger-inner {
+          display: inline-block;
+          margin-top: 20px;
+
+          hr {
+            display: block;
+            width: 24px;
+            border: 0;
+            height: 3px;
+            margin: 3px;
+            transition: -webkit-transform .2s;
+            transition: transform .2s;
+            transition: transform .2s,-webkit-transform .2s;
+            background-color: #fa755a;
+            -webkit-transform-origin: 5px 3px;
+            transform-origin: 5px 3px;
+          }
+        }
+      }
+
+      .logo {
+        margin: 20px auto 0 auto;
+        color: #fba924;
+        letter-spacing: .01em;
+        font-family: 'Baloo Tammudu', cursive;
+      }
+
+      #mobile-search-button {
+        border-left: solid 1px #eaeaea;
+        width: 60px;
+        height: 60px;
+
+        span {
+          display: inline-block;
+          margin: 19px 0 0 7px;
+          height: 34px;
+          width: 33px;
+          background-size: 22px;
+          background-repeat: no-repeat;
+          background-image: url(./assets/images/search-icon-mobile.png);
+        }
+      }
+    }
+
+    &.search-open {
+
+      #mobile-header {
+        margin-bottom: 12px;
+      }
+
+      header {
+        display: block;
+
+        .logo {
+          display: none;
+        }
+
+        .btn {
+          display: none;
+        }
+
+        #search-form {
+          margin-bottom: 12px;
+        }
+      }
+    }
+  }
+
   header {
-    #logo {
+    .logo {
       float: none;
       width: 100%;
       text-align: center;
