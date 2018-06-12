@@ -1,5 +1,5 @@
 <template>
-  <div id="header-section">
+  <div id="header-section" v-bind:class="{ 'search-open': searchOpen }">
 
     <!-- Mobile Header -->
     <div id="mobile-header">
@@ -11,9 +11,10 @@
       <router-link class="logo" to="/">
         <h1>grubster</h1>
       </router-link>
-      <a id="mobile-search-button"><span></span></a>
+      <a id="mobile-search-button" v-on:click.prevent="searchOpen = !searchOpen"><span></span></a>
     </div>
 
+    <!-- Desktop Header -->
     <header>
       <router-link class="logo" to="/">
         <h1>grubster</h1>
@@ -93,7 +94,10 @@ export default {
       if (!this.term.trim()) return;
       this.$refs['search-link-proxy'].$el.click();
       this.term = '';
-    }
+    },
+    toggleSearch() {
+      console.log(1);
+    },
   },
   computed: {
     urlAction() {
@@ -105,6 +109,9 @@ export default {
       this.loginButtonText = newVal.loginButtonText;
       this.sub = newVal.sub;
     },
+    $route() {
+      this.searchOpen = false;
+    }
   },
   data() {
     return {
@@ -112,6 +119,7 @@ export default {
       sub: null,
       favorites: [],
       term: '',
+      searchOpen: false,
     }
   }
 }

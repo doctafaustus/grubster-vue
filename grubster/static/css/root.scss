@@ -701,6 +701,10 @@ header {
 
       #mobile-header {
         margin-bottom: 12px;
+
+        #mobile-search-button span {
+          background-image: url(./assets/images/search-icon-mobile-active.png);
+        }
       }
 
       header {
@@ -767,7 +771,7 @@ header {
 
       li.recipe-card {
         margin: 12px 0;
-        width: 175px;
+        width: 145px;
       }
     }
 
