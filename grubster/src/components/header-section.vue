@@ -1,9 +1,9 @@
 <template>
-  <div id="header-section" v-bind:class="{ 'search-open': searchOpen }">
+  <div id="header-section" v-bind:class="{ 'search-open': searchOpen, 'menu-open': menuOpen }">
 
     <!-- Mobile Header -->
     <div id="mobile-header">
-      <a id="burger-button" href="#">
+      <a id="burger-button" href="#" v-on:click.prevent="menuOpen = !menuOpen">
         <div id="burger-inner">
           <hr><hr><hr>
         </div>
@@ -94,10 +94,7 @@ export default {
       if (!this.term.trim()) return;
       this.$refs['search-link-proxy'].$el.click();
       this.term = '';
-    },
-    toggleSearch() {
-      console.log(1);
-    },
+    }
   },
   computed: {
     urlAction() {
@@ -111,6 +108,7 @@ export default {
     },
     $route() {
       this.searchOpen = false;
+      this.menuOpen = false;
     }
   },
   data() {
@@ -120,6 +118,7 @@ export default {
       favorites: [],
       term: '',
       searchOpen: false,
+      menuOpen: false,
     }
   }
 }

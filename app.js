@@ -1,5 +1,4 @@
 // Automatically favorite when adding
-// Mobile layout - format header and categories submenu
 
 
 // Core Modules
