@@ -21,7 +21,8 @@
     "notifications",
     "background",
     "contextMenus",
-    "tabs"
+    "tabs",
+    "storage"
   ],
 
  "content_scripts": [

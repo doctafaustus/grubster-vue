@@ -1,7 +1,8 @@
 <template>
   <div id="app">
+    <div id="sub" style="display: none;">{{ userData.sub }}</div>
     <header-section v-bind:userData="userData"/>
-    <router-view v-bind:categories="categories" v-bind:userData="userData" v-bind:barColors="barColors"/>
+    <router-view v-if="show" v-bind:categories="categories" v-bind:userData="userData" v-bind:barColors="barColors"/>
   </div>
 </template>
 
@@ -55,6 +56,19 @@ export default {
         });
       }
     });
+
+    if (!window.favoriteListenerAdded) {
+      document.addEventListener('favorite_refresh', () => {
+        window.favoriteListenerAdded = true;
+        console.log('favorite_refresh event dispatched');
+        window.refreshFavorites();
+        const self = this;
+        self.show = false;
+        setTimeout(function() {
+          self.show = true;
+        }, 100);
+      });
+    }
   },
   data() {
     return {
@@ -62,6 +76,7 @@ export default {
       auth,
       barColors,
       userData: {},
+      show: true,
     };
   },
   components: {

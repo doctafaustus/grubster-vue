@@ -1,3 +1,18 @@
+if (window.location.hostname === 'grubster.herokuapp.com' ||
+	window.location.hostname === 'www.grubster.com' ||
+	window.location.hostname === 'localhost') {
+
+	setTimeout(function() {
+		var sub = document.querySelector('#sub').textContent.trim();
+		console.log('[Extension] sub', sub);
+	  chrome.storage.sync.set({'sub': sub}, function() {
+	    console.log('sub saved');
+	  });
+	}, 1500);
+}
+
+
+
 // Receive message from extension
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
@@ -16,6 +31,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 		sendResponse(response);
 	}
 
+	if (request.rsAction === 'refresh') {
+		console.log('[Extension] Forcing manual favorite refresh');
+	  document.dispatchEvent(new CustomEvent('favorite_refresh'));
+	}
 });
 
 
@@ -43,7 +62,7 @@ function getImages() {
 	imagesArray.sort(function(a, b) {
 		return b.dimensions - a.dimensions;
 	});
-	console.log(imagesArray);
+	console.log('[Extension]', imagesArray);
 
 	// Push up to the first four images into a new array
 	var featureImages = [];

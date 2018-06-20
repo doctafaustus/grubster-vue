@@ -49,6 +49,7 @@ export default {
   },
   created() {
     this.getRecipes();
+    window.refreshFavorites = this.refreshFavorites;
   },
   mounted() {
     this.updateColor();
@@ -160,6 +161,14 @@ export default {
           this.totalRecipes = 0;
           this.$parent.$emit('login');
         }
+      });
+    },
+    refreshFavorites() {
+      console.log('Refreshing favorites!');
+      this.$http.get(`http://localhost:3000/api/favorites/refresh/${this.userData.sub}`, {a: 1}, {emulateJSON: true})
+      .then(data => {
+        console.log('favorites refreshed!');
+        window.favorites = JSON.parse(data.bodyText);
       });
     }
   },

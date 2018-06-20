@@ -37,34 +37,45 @@ $('#submit-recipe').click(function() {
   var categories = [$('#meal-type-category').val(), $('#food-category').val(), $('#diet-category').val()];
   categories = categories.filter(category => category);
 
-	$.ajax({
-		type: 'POST',
-	  url: 'http://127.0.0.1:3000/api/extension',
-	  contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-	  data: { 
-      title: $('#recipe-title').val(),
-      host: $('#recipe-host').val(),
-      url: $('#recipe-url').val(),
-      image: $('#images .current img').attr('src'),
-      categories: categories,
-    },
-	  success: function(data) {
-      console.log('success', data);
-      $('#main').hide();
+  chrome.storage.sync.get('sub', function(item) {
+    $.ajax({
+      type: 'POST',
+      url: 'http://127.0.0.1:3000/api/extension',
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+      data: { 
+        title: $('#recipe-title').val(),
+        host: $('#recipe-host').val(),
+        url: $('#recipe-url').val(),
+        image: $('#images .current img').attr('src'),
+        categories: categories,
+        sub: item.sub,
+      },
+      success: function(data) {
+        console.log('success', data);
+        $('#main').hide();
 
-      if (data.message === 'recipe added') {
-        $('#success-message, #home-link').show();
-      } else if (data.message === 'favorited only') {
-        $('#info-message, #home-link').show();
+        if (data.message === 'recipe added') {
+          $('#success-message, #home-link').show();
+        } else if (data.message === 'favorited') {
+          $('#info-message, #home-link').show();
+        }
+
+        if (item.sub) {
+          chrome.tabs.query({ url: ['http://localhost:8080/*'] }, function(tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, {rsAction: 'refresh'}, function(response) {
+              console.log('Message sent');
+            });
+          });
+        }
+      },
+      error: function(jqXHR) {
+        console.log('error', jqXHR);
+      },
+      complete: function() {
+        $('.sk-fading-circle, #overlay').hide();
       }
-	  },
-	  error: function(jqXHR) {
-	  	console.log('error', jqXHR);
-	  },
-    complete: function() {
-      $('.sk-fading-circle, #overlay').hide();
-    }
-	});
+    });
+  });
 });
 
 
