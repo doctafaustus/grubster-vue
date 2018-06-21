@@ -1,7 +1,4 @@
-// if (userFavorites.indexOf() === -1) { ??????
-// Should favorites start at 0?
 // Debug missing extension response on initial click
-
 
 
 // Core Modules
@@ -101,7 +98,7 @@ app.listen(process.env.PORT || 3000, () => {
 });
 
 
-// All Recipes
+// PAGE: All Recipes
 app.get('/api/recipes', (req, res) => {
 
   const page = req.query.page;
@@ -122,7 +119,7 @@ app.get('/api/recipes/search/:term', (req, res) => {
 });
 
 
-// Most Popular Recipes
+// PAGE: Most Popular Recipes
 app.get('/api/recipes/most-popular', (req, res) => {
   const { page } = req.query;
 
@@ -131,7 +128,7 @@ app.get('/api/recipes/most-popular', (req, res) => {
   });
 });
 
-// Favorite Recipes
+// PAGE: Favorite Recipes
 app.get('/api/recipes/favorites', (req, res) => {
   const { page } = req.query;
 
@@ -159,7 +156,7 @@ app.get('/api/recipes/favorites', (req, res) => {
 });
 
 
-// Recipe Categories
+// PAGE: Recipe Categories
 app.get('/api/recipes/category/:category', (req, res) => {
   const { category } = req.params;
   const { page } = req.query;
@@ -170,29 +167,14 @@ app.get('/api/recipes/category/:category', (req, res) => {
 });
 
 
-// Favorite recipe
-app.post('/api/recipes/:recipeID', (req, res) => {
-  const { recipeID } = req.params;
-  const { user } = req.query;
-
-  Recipe.findOne({ _id: recipeID }, (err, recipe) => {
-    recipe.favorites++;
-    recipe.save(() => {
-      console.log('recipe saved!');
-      res.sendStatus(204);
-    });
-  });
-});
-
-
 
 // Extension POST
 app.post('/api/extension', (req, res) => {
   console.log('/api/extension');
 
   // First check if recipe is already in database
-  Recipe.find({ url: req.body.url }, (err, recipes) => {
-    if (!recipes.length) {
+  Recipe.findOne({ url: req.body.url }, (err, recipe) => {
+    if (!recipe) {
 
       cloudinary.uploader.upload(req.body.image,
         function(result) {
@@ -202,7 +184,7 @@ app.post('/api/extension', (req, res) => {
             image: result.secure_url || 'http://res.cloudinary.com/dormh2fvt/image/upload/v1527317481/placeholder_rjy55k.jpg',
             host: req.body.host,
             url: req.body.url,
-            favorites: 1,
+            favorites: 0,
             flag: 0,
             category: req.body.categories,
           });
@@ -210,7 +192,7 @@ app.post('/api/extension', (req, res) => {
           recipe.save((err, recipe) => {
             console.log('New recipe addded!');
             if (req.body.sub) {
-              saveExtensionRecipeAsFavorite(recipe._id, req, res, 'recipe added');
+              saveExtensionRecipeAsFavorite(recipe, req, res, 'recipe added');
             } else {
               res.json({ message: 'recipe added' });
             }
@@ -221,9 +203,9 @@ app.post('/api/extension', (req, res) => {
 
     } else {
       if (req.body.sub) {
-        saveExtensionRecipeAsFavorite(recipes[0]._id, req, res, 'favorited');
+        saveExtensionRecipeAsFavorite(recipe, req, res, 'favorited');
       } else {
-        console.log('No user specified');
+        res.json({ message: 'in db, no user' });
       }
     }
   });
@@ -233,15 +215,18 @@ app.post('/api/extension', (req, res) => {
 function saveExtensionRecipeAsFavorite(recipe, req, res, message) {
   User.findOne({ '_id': req.body.sub }, (err, user) => {
     const userFavorites = user.favorites;
-    if (userFavorites.indexOf(recipe) === -1) {
-      user.favorites.push(recipe);
-      user.save((err, user) => {
-        if (message === 'recipe added') {
-          console.log('Recipe added to database and favorited');
-        } else {
-          console.log('Recipe already in database but favorited');
-        }
-        res.json({ message: message });
+    if (userFavorites.indexOf(recipe._id) === -1) {      
+      recipe.favorites++;
+      recipe.save(() => {
+        user.favorites.push(recipe._id);
+        user.save((err, user) => {
+          if (message === 'recipe added') {
+            console.log('Recipe added to database and favorited');
+          } else {
+            console.log('Recipe already in database but favorited');
+          }
+          res.json({ message: message });
+        });
       });
     } else {
       console.log('Recipe already in database AND favorites');
@@ -298,13 +283,21 @@ app.post('/api/favorites/add/:subject', (req, res) => {
   const { recipeID } = req.query;
 
   User.findOne({ '_id': subject }, (err, user) => {
+    if (!user) return res.sendStatus(404);
+
     const userFavorites = user.favorites;
 
-    if (userFavorites.indexOf() === -1) {
+    if (userFavorites.indexOf(recipeID) === -1) {
       user.favorites.push(recipeID);
       user.save((err, user) => {
         console.log(recipeID + ' added to favorites!');
-        res.json(user.favorites);
+        Recipe.findOne({ _id: recipeID }, (err, recipe) => {
+          recipe.favorites++;
+          recipe.save(() => {
+            console.log('recipe saved!');
+            res.json(user.favorites);
+          });
+        });
       });
     } else {
       console.log('recipe already in favorites');
@@ -322,10 +315,16 @@ app.post('/api/favorites/remove/:subject', (req, res) => {
   const { recipeID } = req.query;
 
   User.findOne({ '_id': subject }, (err, user) => {
+    if (!user) return res.sendStatus(404);
     user.favorites = user.favorites.filter(favorite => favorite !== recipeID);
     user.save((err, user) => {
       console.log(recipeID + ' removed from favorites!');
-      res.json(user.favorites);
+      Recipe.findOne({ _id: recipeID }, (err, recipe) => {
+        recipe.favorites--;
+        recipe.save(() => {
+          res.json(user.favorites);
+        });
+      });
     });
   });
 });

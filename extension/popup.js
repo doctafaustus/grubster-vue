@@ -58,6 +58,8 @@ $('#submit-recipe').click(function() {
           $('#success-message, #home-link').show();
         } else if (data.message === 'favorited') {
           $('#info-message, #home-link').show();
+        } else if (data.message === 'in db, no user') {
+          $('#success-message-2, #home-link').show();
         }
 
         if (item.sub) {
@@ -70,6 +72,7 @@ $('#submit-recipe').click(function() {
       },
       error: function(jqXHR) {
         console.log('error', jqXHR);
+        $('#error-message, #home-link').show();
       },
       complete: function() {
         $('.sk-fading-circle, #overlay').hide();
