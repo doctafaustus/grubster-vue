@@ -1,6 +1,3 @@
-// Debug missing extension response on initial click
-
-
 // Core Modules
 const express = require('express');
 const bodyParser = require('body-parser');
