@@ -1,4 +1,4 @@
-import mostPopular from './components/most-popular.vue';
+//import mostPopular from './components/most-popular.vue';
 import recipeList from './components/recipe-list.vue';
 
 export default [

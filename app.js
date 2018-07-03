@@ -1,3 +1,7 @@
+// Extension install modal
+// Active hover for navigation
+
+
 // Core Modules
 const express = require('express');
 const bodyParser = require('body-parser');

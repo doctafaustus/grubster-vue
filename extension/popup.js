@@ -121,4 +121,10 @@ $('#next').click(function() {
 	navigate('next');
 });
 
-//https://christianheilmann.com/2015/04/08/keeping-it-simple-coding-a-carousel/
+
+// Installation callback
+chrome.runtime.onInstalled.addListener(function(details) {
+  if (details.reason === 'install') {
+    chrome.tabs.create({ url: 'http://localhost:8080?extension_callback=true' });
+  }
+});

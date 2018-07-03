@@ -29,6 +29,15 @@
     </ul>
 
     <a id="show-more" href="#" class="btn btn-orange" v-show="pageCounter < totalPages" v-on:click.prevent="getRecipes">Show More</a>
+
+    <div id="extension-welcome" v-show="extensionModalOpen">
+      <div id="extension-welcome-modal" class="modal opened">
+      HI
+      </div>
+      <div class="overlay opened"></div>
+    </div>
+
+
   </div>
 </template>
 
@@ -44,12 +53,16 @@ export default {
       totalPages: 0,
       totalRecipes: 0,
       recipesTitle: '',
+      extensionModalOpen: false,
       category: this.getCategory(),
     }
   },
   created() {
     this.getRecipes();
     window.refreshFavorites = this.refreshFavorites;
+    if (window.location.search.indexOf('extension_callback') > -1) {
+      this.extensionModalOpen = true;
+    }
   },
   mounted() {
     this.updateColor();
