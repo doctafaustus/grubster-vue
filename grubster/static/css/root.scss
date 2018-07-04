@@ -90,6 +90,12 @@ header {
           border-bottom: solid 2px #fbae32;
         }
       }
+
+      &.active {
+        a {
+          border-bottom: solid 2px #089de3;
+        }
+      }
     }
 
     li#categories {

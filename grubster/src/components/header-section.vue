@@ -35,9 +35,9 @@
     
     <div id="bar-outer">
       <ul id="bar">
-        <li><router-link to="/">Recent</router-link></li>
-        <li><router-link to="/most-popular">Most Popular</router-link></li>
-        <li><router-link to="/favorites">Favorites</router-link></li>
+        <li id="recent-li"><router-link to="/">Recent</router-link></li>
+        <li id="most-popular-li"><router-link to="/most-popular">Most Popular</router-link></li>
+        <li id="favorites-li"><router-link to="/favorites">Favorites</router-link></li>
         <li id="categories">
           <a href="#">Categories</a>
           <div id="categories-dropdown">
@@ -94,6 +94,20 @@ export default {
       if (!this.term.trim()) return;
       this.$refs['search-link-proxy'].$el.click();
       this.term = '';
+    },
+    highlightNav() {
+      [...document.querySelectorAll('#bar > li')].forEach(li => {
+        li.classList.remove('active');
+      });
+
+      const navSelectorMap = {
+        '': 'recent-li',
+        'most-popular': 'most-popular-li',
+        'favorites': 'favorites-li',
+        'category': 'categories',
+      }
+      const activeNavID = navSelectorMap[window.location.pathname.split('/')[1]];
+      document.querySelector(`#${activeNavID}`).classList.add('active');
     }
   },
   computed: {
@@ -101,14 +115,19 @@ export default {
       return `/search/${this.term}`;
     },
   },
+  mounted() {
+    this.highlightNav();
+  },
   watch: {
     userData(newVal, oldVal) {
       this.loginButtonText = newVal.loginButtonText;
       this.sub = newVal.sub;
     },
     $route() {
+      console.log('ruout change!@');
       this.searchOpen = false;
       this.menuOpen = false;
+      this.highlightNav();
     }
   },
   data() {

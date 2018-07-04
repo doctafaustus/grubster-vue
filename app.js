@@ -1,5 +1,4 @@
 // Extension install modal
-// Active hover for navigation
 
 
 // Core Modules
