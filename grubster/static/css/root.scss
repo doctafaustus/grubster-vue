@@ -10,19 +10,24 @@
   100% { opacity: 1 }
 }
 
+.logo {
+  padding: 0 10px;
+  color: #fba924;
+  letter-spacing: .01em;
+  font-family: 'Baloo Tammudu', cursive;
+}
+
 header {
   .logo {
-    padding: 0 10px;
-    color: #fba924;
-    letter-spacing: .01em;
-    font-family: 'Baloo Tammudu', cursive;
     float: left;
-
-    h1 {
-      padding: 28px 14px 14px 14px;
-      display: inline-block;
-    }
   }
+
+
+  h1 {
+    padding: 28px 14px 14px 14px;
+    display: inline-block;
+  }
+  
 
   #header-right {
     float: right;
@@ -350,13 +355,41 @@ header {
 }
 
 
+#extension-welcome {
+  #extension-welcome-modal {
+    padding: 40px;
+
+    .logo {
+      margin-bottom: 20px;
+    }
+
+    .extension-title {
+      margin-bottom: 25px;
+    }
+
+    div {
+      line-height: 24px;
+    }
+
+    #extension-login {
+      color: #089de3;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+
+
 
 .modal {
   position: fixed;
   box-sizing: border-box;
   width: 600px;
   text-align: center;
-  top: 50%;
+  top: 30%;
   transform: translateY(-50%);
   left: 0;
   right: 0;
@@ -367,6 +400,16 @@ header {
   box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07);
   padding: 20px;
   z-index: 10000;
+
+  .close {
+    width: 20px;
+    fill: #b9b8b8;
+    cursor: pointer;
+    float: right;
+    position: relative;
+    top: -24px;
+    right: -24px;
+  }
 }
 .overlay, .modal {
   opacity: 0;
@@ -402,6 +445,10 @@ header {
 }
 
 @media (max-width: 810px) {
+  .modal {
+    width: 90%;
+  }
+
 
   #bar-outer {
     display: none;

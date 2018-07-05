@@ -32,9 +32,18 @@
 
     <div id="extension-welcome" v-show="extensionModalOpen">
       <div id="extension-welcome-modal" class="modal opened">
-      HI
+        <svg class="close" viewBox="0 0 32 32" v-on:click="hideModal">
+          <polygon points="24.485,27.314 27.314,24.485 18.828,16 27.314,7.515 24.485,4.686 16,13.172 7.515,4.686 4.686,7.515 13.172,16 4.686,24.485 7.515,27.314 16,18.828 "></polygon>
+        </svg>
+        <div class="logo">
+          <h1>grubster</h1>
+        </div>
+        <h2 class="extension-title">Thanks for downloading the grubster extension!</h2>
+        <div>
+          To save recipes to your favorites please <a id="extension-login" href="#" v-on:click.prevent="extensionLogin">Login</a>. Any recipes you save with the extension will then automatically be saved to your account!
+        </div>
       </div>
-      <div class="overlay opened"></div>
+      <div class="overlay opened" v-on:click.prevent="hideModal"></div>
     </div>
 
 
@@ -68,6 +77,12 @@ export default {
     this.updateColor();
   },
   methods: {
+    hideModal() {
+      document.querySelector('#extension-welcome').setAttribute('style', 'display: none;');
+    },
+    extensionLogin() {
+      this.$parent.$emit('login', 'from_extension');
+    },
     getSearchTerm() {
       const term = (window.location.pathname.match(/\/search\/(.+)/) || [])[1];
       const decodedTerm = window.decodeURIComponent(term);

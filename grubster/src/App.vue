@@ -41,10 +41,13 @@ export default {
       });
     }, 50, 8000);
 
-    this.$on('login', () => {
+    this.$on('login', (param) => {
       if (!localStorage.getItem('expires_at')) {
         console.log('logging in...')
         this.auth.login();
+      } else if (param === 'from_extension') {
+        console.log('Previously logged in');
+        document.querySelector('#extension-welcome').setAttribute('style', 'display: none;');
       } else {
         this.auth.logout(() => {
           // Destroy session server-side
@@ -56,6 +59,8 @@ export default {
         });
       }
     });
+
+
 
     if (!window.favoriteListenerAdded) {
       document.addEventListener('favorite_refresh', () => {
