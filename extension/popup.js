@@ -1,3 +1,8 @@
+const devURL = 'http://localhost:8080';
+const prodURL = 'http://www.grubster.com';
+const URL = devURL;
+
+
 // When popup.us opens, send message to content script to extract recipe data
 // On response, populate the extension form with the returned data
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -125,6 +130,6 @@ $('#next').click(function() {
 // Installation callback
 chrome.runtime.onInstalled.addListener(function(details) {
   if (details.reason === 'install') {
-    chrome.tabs.create({ url: 'http://localhost:8080?extension_callback=true' });
+    chrome.tabs.create({ url: `${URL}?extension_callback=true` });
   }
 });
