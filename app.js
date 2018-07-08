@@ -24,6 +24,10 @@ mongoose.Promise = global.Promise; // Removes deprecation warning
 mongoose.connect('mongodb://localhost/grubster');
 
 
+// Private Config Data
+const adminID = fs.readFileSync('./private/admin-id.txt').toString();
+
+
 const userSchema = new mongoose.Schema({
   _id: String,
   nickname: String,
@@ -239,7 +243,6 @@ function saveExtensionRecipeAsFavorite(recipe, req, res, message) {
 
 // Add / find users
 app.post('/api/users/:subject', (req, res) => {
-  console.log('/users/:subject');
 
   const { subject } = req.params;
   const { nickname } = req.query; 
@@ -248,6 +251,8 @@ app.post('/api/users/:subject', (req, res) => {
 
   User.findOne({ '_id': subject }, (err, user) => {
     if (user) {
+      if (subject === adminID) res.cookie('isAdmin', 'true');
+      else res.cookie('isAdmin', 'false');
       res.json(user);
     } else { // User not found, create new user
       console.log('Creating new user');
@@ -353,6 +358,21 @@ app.get('/api/flag/:recipeID', (req, res) => {
   });
 
 });
+
+// Admin Delete
+app.get('/api/admin-delete/:recipeID', (req, res) => {
+  const { recipeID } = req.params;
+
+  if (req.session.sub === adminID) {
+    Recipe.remove({ '_id': recipeID }, (err, recipe) => {
+      console.log('recipe deleted!');
+      res.sendStatus(200);
+    });
+  } else {
+    res.sendStatus(401);
+  }
+});
+
 
 
 function sendRecipes(data, res) {

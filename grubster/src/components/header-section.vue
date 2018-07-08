@@ -102,6 +102,7 @@ export default {
 
       const navSelectorMap = {
         '': 'recent-li',
+        'callback': 'recent-li',
         'most-popular': 'most-popular-li',
         'favorites': 'favorites-li',
         'category': 'categories',

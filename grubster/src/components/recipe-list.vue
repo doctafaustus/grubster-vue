@@ -21,6 +21,7 @@
               <div class="recipe-host">{{ recipe.host }}</div>
             </div>
           </a>
+              <div v-show="isAdmin" class="admin-delete"><a href="#" v-on:click.prevent="adminDelete">Delete</a></div>
           <svg class="flag" v-on:click="flag">
             <path d="M49.1,29.2c-10.4-5.2-18.7-4.5-18.7-4.5v46.6c0,0,3.9,0.7,3.9-1.7c0-2.4,0-19.9,0-19.9c2.2-0.7,6.1-1.4,14.8,4.3  c11.2,6.6,16.4-2,16.4-2V27.2C65.5,27.2,59.6,34.1,49.1,29.2z"/>
           </svg>
@@ -63,6 +64,7 @@ export default {
       totalRecipes: 0,
       recipesTitle: '',
       extensionModalOpen: false,
+      isAdmin: false,
       category: this.getCategory(),
     }
   },
@@ -72,11 +74,27 @@ export default {
     if (window.location.search.indexOf('extension_callback') > -1) {
       this.extensionModalOpen = true;
     }
+    this.getAdminStatus();
   },
   mounted() {
     this.updateColor();
   },
   methods: {
+    getAdminStatus() {
+      if (document.cookie.indexOf('isAdmin=true') > -1) {
+        this.isAdmin = true;
+        console.log('this is amidn')
+      }
+    },
+    adminDelete(event) {
+      const target = event.target.closest('li');
+      const id = target.getAttribute('data-recipe-id');
+      this.$http.get(`http://localhost:3000/api/admin-delete/${id}`)
+      .then(data => {
+        console.log('successful admin delete');
+        target.classList.add('admin-deleted');
+      });
+    },
     hideModal() {
       document.querySelector('#extension-welcome').setAttribute('style', 'display: none;');
     },

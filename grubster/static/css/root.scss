@@ -240,6 +240,10 @@ header {
       box-shadow: 1px 1px 6px rgba(0,0,0,0.2);
       width: 285px;
 
+      &.admin-deleted {
+        border: solid 3px red;
+      }
+
       .recipe-like {
         position: absolute;
         z-index: 10;
@@ -314,6 +318,19 @@ header {
             color: #00a4e4;
             padding-bottom: 2px;
           }
+        }
+      }
+
+      .admin-delete {
+        z-index: 10;
+        cursor: pointer;
+        position: absolute;
+        bottom: -22px;
+        left: 0;
+        font-size: 14px;
+
+        &:hover {
+          text-decoration: underline;
         }
       }
 
