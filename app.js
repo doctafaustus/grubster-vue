@@ -96,6 +96,12 @@ app.use(session({
 }));
 
 
+app.use((req, res, next) => {
+  if (req.session.sub === adminID) res.cookie('isAdmin', 'true');
+  else res.cookie('isAdmin', 'false');
+  next();
+});
+
 // Listen
 app.listen(process.env.PORT || 3000, () => {
   console.log('App listening on port 3000');
@@ -251,8 +257,6 @@ app.post('/api/users/:subject', (req, res) => {
 
   User.findOne({ '_id': subject }, (err, user) => {
     if (user) {
-      if (subject === adminID) res.cookie('isAdmin', 'true');
-      else res.cookie('isAdmin', 'false');
       res.json(user);
     } else { // User not found, create new user
       console.log('Creating new user');

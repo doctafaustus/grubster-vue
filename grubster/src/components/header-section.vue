@@ -27,7 +27,7 @@
           <router-link v-bind:to="urlAction" ref="search-link-proxy" style="display: none;">Search Link Proxy</router-link>
         </form>
 
-        <a id="add-recipe" class="btn btn-orange" href="#">Add Recipe</a>
+        <a id="add-recipe" class="btn btn-orange" href="#" v-on:click.prevent="showAddRecipeModal">Add Recipe</a>
         <a id="login" class="btn btn-orange" href="#" v-on:click.prevent="login">{{ loginButtonText }}</a>
       </div>
     </header>
@@ -76,6 +76,30 @@
         </li>
       </ul>
     </div>
+
+    <div id="add-recipe" v-show="addRecipeModalOpen">
+      <div id="add-recipe-modal" class="modal opened">
+        <svg class="close" viewBox="0 0 32 32" v-on:click="hideAddRecipeModal">
+          <polygon points="24.485,27.314 27.314,24.485 18.828,16 27.314,7.515 24.485,4.686 16,13.172 7.515,4.686 4.686,7.515 13.172,16 4.686,24.485 7.515,27.314 16,18.828 "></polygon>
+        </svg>
+        <div class="logo">
+          <h1>grubster</h1>
+        </div>
+
+        <div>
+          <p>
+            Recipes are saved to grubster exclusively via our Chrome extension.
+          </p>
+          <div id="add-recipe-image"></div>
+          <p>
+            Download it <a id="extension-link" href="https://chrome.google.com/webstore/detail/grubster/gbajiiilpiadmjdmkgmnmhpnnafffaal" target="_blank">here</a> and start saving recipes to grubster and your favorites today!
+          </p>
+        </div>
+
+      </div>
+      <div class="overlay opened" v-on:click.prevent="hideAddRecipeModal"></div>
+    </div>
+
   </div>
 </template>
 
@@ -86,7 +110,24 @@
 
 export default {
   props: ['userData'],
+  data() {
+    return {
+      loginButtonText: 'Login / Register',
+      sub: null,
+      favorites: [],
+      term: '',
+      searchOpen: false,
+      menuOpen: false,
+      addRecipeModalOpen: false,
+    }
+  },
   methods: {
+    showAddRecipeModal() {
+      this.addRecipeModalOpen = true;
+    },
+    hideAddRecipeModal() {
+      this.addRecipeModalOpen = false;
+    },
     login() {
       this.$parent.$emit('login');
     },
@@ -108,6 +149,7 @@ export default {
         'category': 'categories',
       }
       const activeNavID = navSelectorMap[window.location.pathname.split('/')[1]];
+      if (!activeNavID) return;
       document.querySelector(`#${activeNavID}`).classList.add('active');
     }
   },
@@ -125,20 +167,9 @@ export default {
       this.sub = newVal.sub;
     },
     $route() {
-      console.log('ruout change!@');
       this.searchOpen = false;
       this.menuOpen = false;
       this.highlightNav();
-    }
-  },
-  data() {
-    return {
-      loginButtonText: 'Login / Register',
-      sub: null,
-      favorites: [],
-      term: '',
-      searchOpen: false,
-      menuOpen: false,
     }
   }
 }

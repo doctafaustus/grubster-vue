@@ -83,7 +83,6 @@ export default {
     getAdminStatus() {
       if (document.cookie.indexOf('isAdmin=true') > -1) {
         this.isAdmin = true;
-        console.log('this is amidn')
       }
     },
     adminDelete(event) {
@@ -107,7 +106,6 @@ export default {
       return `"${decodedTerm}" Results`;
     },
     flag(event) {
-
       const target = event.target.classList.contains('flag') ? event.target : event.target.parentNode;
       if (target.classList.contains('active')) return;
       const id = target.closest('li').getAttribute('data-recipe-id');
@@ -125,7 +123,6 @@ export default {
         console.log('success');
         localStorage.setItem(`flag-${id}`, true);
       });
-
     },
     updateColor() {
       const color = this.barColors[window.location.pathname] ? this.barColors[window.location.pathname] : this.barColors['/categories'];
@@ -152,11 +149,10 @@ export default {
           }
         });
       } else {
-        recipeLikeCountEl.innerHTML = recipeLikeCountNum + 1;
-        heartEl.classList.add('favorited');
-
         this.$http.post(`http://localhost:3000/api/favorites/add/${this.userData.sub}?recipeID=${id}`, {a: 1}, {emulateJSON: true})
         .then(data => {
+          recipeLikeCountEl.innerHTML = recipeLikeCountNum + 1;
+          heartEl.classList.add('favorited');
           window.favorites = JSON.parse(data.bodyText);
         }).catch(data => {
           this.$parent.$emit('login');

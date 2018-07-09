@@ -241,7 +241,7 @@ header {
       width: 285px;
 
       &.admin-deleted {
-        border: solid 3px red;
+        border: solid 2px red;
       }
 
       .recipe-like {
@@ -372,8 +372,8 @@ header {
 }
 
 
-#extension-welcome {
-  #extension-welcome-modal {
+#extension-welcome, #add-recipe {
+  #extension-welcome-modal, #add-recipe-modal {
     padding: 40px;
 
     .logo {
@@ -386,9 +386,20 @@ header {
 
     div {
       line-height: 24px;
+
+      #add-recipe-image {
+        border: solid 1px #03b7f6;
+        display: block;
+        margin: 20px auto;
+        height: 541px;
+        background-size: cover;
+        background-position: right top;
+        background-image: url(./assets/images/extension-screenshot-1-small.png);
+        background-repeat: no-repeat;
+      }
     }
 
-    #extension-login {
+    a {
       color: #089de3;
 
       &:hover {
@@ -406,7 +417,7 @@ header {
   box-sizing: border-box;
   width: 600px;
   text-align: center;
-  top: 30%;
+  top: 40%;
   transform: translateY(-50%);
   left: 0;
   right: 0;
