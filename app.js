@@ -1,6 +1,3 @@
-// Extension install modal
-
-
 // Core Modules
 const express = require('express');
 const bodyParser = require('body-parser');
