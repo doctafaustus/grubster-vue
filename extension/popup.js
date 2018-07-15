@@ -72,6 +72,7 @@ $('#submit-recipe').click(function() {
       },
       error: function(jqXHR) {
         console.log('error', jqXHR);
+        $('#main').hide();
         $('#error-message, #home-link').show();
       },
       complete: function() {

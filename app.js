@@ -18,7 +18,18 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 const dbOptions = { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }, replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } } };
 mongoose.Promise = global.Promise; // Removes deprecation warning
-mongoose.connect('mongodb://localhost/grubster');
+
+
+// Connect to DB
+if (!process.env.PORT) {
+  mongoose.connect('mongodb://localhost/grubster');
+} else {
+  console.log("Application running in Heroku!");
+  // const mongodbUri = process.env.MONGODB_URI; // A Heroku config variable
+  // const mongooseUri = uriUtil.formatMongoose(mongodbUri);
+  // mongoose.connect(mongooseUri, dbOptions);
+}
+
 
 
 // Private Config Data
