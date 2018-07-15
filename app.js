@@ -118,6 +118,12 @@ app.listen(process.env.PORT || 3000, () => {
 });
 
 
+// Homepage (Heroku-accessible only)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname + 'grubster/index.html'));
+});
+
+
 // PAGE: All Recipes
 app.get('/api/recipes', (req, res) => {
 
