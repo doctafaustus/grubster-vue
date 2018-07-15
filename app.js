@@ -33,7 +33,7 @@ if (!process.env.PORT) {
 
 
 // Private Config Data
-const adminID = fs.readFileSync('./private/admin-id.txt').toString();
+const adminID = process.env.PORT ? process.env.ADMIN_ID : fs.readFileSync('./private/admin-id.txt').toString();
 
 
 const userSchema = new mongoose.Schema({
