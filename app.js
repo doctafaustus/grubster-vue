@@ -97,7 +97,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(express.static(path.join(`${__dirname}/grubster/dist/static`)));
-console.log('WHERE AM I', `${__dirname}/static`);
+console.log('WHERE AM I', path.join(`${__dirname}/grubster/dist/static`));
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
 app.use(session({
   secret: 'keyboard cat',
