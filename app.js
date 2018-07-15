@@ -77,7 +77,9 @@ if (!process.env.PORT) {
 
 
 // Cloudinary Config
-const cloudinarySecret = fs.readFileSync('./private/cloudinary_secret.txt').toString();
+const cloudinarySecret = process.env.PORT ? process.env.CLOUDINARY_SECRET : fs.readFileSync('./private/cloudinary_secret.txt').toString();
+
+
 cloudinary.config({ 
   cloud_name: 'dormh2fvt', 
   api_key: '778489856867779', 
