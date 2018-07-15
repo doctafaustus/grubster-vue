@@ -25,9 +25,9 @@ if (!process.env.PORT) {
   mongoose.connect('mongodb://localhost/grubster');
 } else {
   console.log("Application running in Heroku!");
-  // const mongodbUri = process.env.MONGODB_URI; // A Heroku config variable
-  // const mongooseUri = uriUtil.formatMongoose(mongodbUri);
-  // mongoose.connect(mongooseUri, dbOptions);
+  const mongodbUri = process.env.MONGODB_URI; // A Heroku config variable
+  const mongooseUri = uriUtil.formatMongoose(mongodbUri);
+  mongoose.connect(mongooseUri, dbOptions);
 }
 
 
