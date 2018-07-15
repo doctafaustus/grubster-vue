@@ -96,8 +96,8 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
 });
-app.use(express.static(path.join(`${__dirname}/grubster/dist/static`)));
-console.log('WHERE AM I', path.join(`${__dirname}/grubster/dist/static`));
+app.use(express.static(path.join(`${__dirname}/grubster/dist/`)));
+console.log('WHERE AM I', path.join(`${__dirname}/grubster/dist/`));
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
 app.use(session({
   secret: 'keyboard cat',
