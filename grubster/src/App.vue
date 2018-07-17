@@ -26,7 +26,7 @@ export default {
       this.auth.getProfile((err, profile) => {
         console.log('profile', profile);
 
-        this.$http.post(`http://localhost:3000/api/users/${profile.sub}?nickname=${profile.nickname}`, {}, {emulateJSON: true})
+        this.$http.post(`${window.endpoint}/api/users/${profile.sub}?nickname=${profile.nickname}`, {}, {emulateJSON: true})
         .then(data => {
           console.log('done!', data);
           self.userData = {
