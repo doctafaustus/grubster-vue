@@ -6,6 +6,8 @@ import VueResource from 'vue-resource';
 import VueRouter from 'vue-router';
 import routes from './routes';
 
+window.endpoint = (window.location.origin.indexOf('http://localhost') > -1) ? 'http://localhost:3000' : '';
+
 Vue.use(VueResource);
 Vue.use(VueRouter);
 
@@ -22,4 +24,3 @@ window.vm = new Vue({
   router: router,
 });
 
-window.endpoint = (window.location.origin.indexOf('http://localhost') > -1) ? 'http://localhost:3000' : '';
