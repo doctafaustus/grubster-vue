@@ -88,7 +88,7 @@ export default {
     adminDelete(event) {
       const target = event.target.closest('li');
       const id = target.getAttribute('data-recipe-id');
-      this.$http.get(`http://localhost:3000/api/admin-delete/${id}`)
+      this.$http.get(`${window.endpoint}/api/admin-delete/${id}`)
       .then(data => {
         console.log('successful admin delete');
         target.classList.add('admin-deleted');
@@ -118,7 +118,7 @@ export default {
 
       if (localStorage.getItem(`flag-${id}`)) return console.log('Recipe already flagged');
       
-      this.$http.get(`http://localhost:3000/api/flag/${id}`)
+      this.$http.get(`${window.endpoint}/api/flag/${id}`)
       .then(data => {
         console.log('success');
         localStorage.setItem(`flag-${id}`, true);
@@ -140,7 +140,7 @@ export default {
         recipeLikeCountEl.innerHTML = recipeLikeCountNum - 1;
         heartEl.classList.remove('favorited');
 
-        this.$http.post(`http://localhost:3000/api/favorites/remove/${this.userData.sub}?recipeID=${id}`, {a: 1}, {emulateJSON: true})
+        this.$http.post(`${window.endpoint}/api/favorites/remove/${this.userData.sub}?recipeID=${id}`, {a: 1}, {emulateJSON: true})
         .then(data => {
           window.favorites = JSON.parse(data.bodyText);
           if (window.location.pathname === '/favorites') {
@@ -149,7 +149,7 @@ export default {
           }
         });
       } else {
-        this.$http.post(`http://localhost:3000/api/favorites/add/${this.userData.sub}?recipeID=${id}`, {a: 1}, {emulateJSON: true})
+        this.$http.post(`${window.endpoint}/api/favorites/add/${this.userData.sub}?recipeID=${id}`, {a: 1}, {emulateJSON: true})
         .then(data => {
           recipeLikeCountEl.innerHTML = recipeLikeCountNum + 1;
           heartEl.classList.add('favorited');
@@ -192,7 +192,7 @@ export default {
     },
     getRecipes() {
       this.pageCounter++;
-      this.$http.get(`http://localhost:3000/api/recipes/${this.getEndpoint()}?page=${this.pageCounter}`)
+      this.$http.get(`${window.endpoint}/api/recipes/${this.getEndpoint()}?page=${this.pageCounter}`)
       .then(data => {
         this.recipes.push(...data.body.recipes);
         this.totalPages = data.body.totalPages;
@@ -209,7 +209,7 @@ export default {
     },
     refreshFavorites() {
       console.log('Refreshing favorites!');
-      this.$http.get(`http://localhost:3000/api/favorites/refresh/${this.userData.sub}`, {a: 1}, {emulateJSON: true})
+      this.$http.get(`${window.endpoint}/api/favorites/refresh/${this.userData.sub}`, {a: 1}, {emulateJSON: true})
       .then(data => {
         console.log('favorites refreshed!');
         window.favorites = JSON.parse(data.bodyText);

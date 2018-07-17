@@ -21,3 +21,5 @@ window.vm = new Vue({
   render: h => h(App),
   router: router,
 });
+
+window.endpoint = (window.location.origin.indexOf('http://localhost') > -1) ? 'http://localhost:3000' : '';
