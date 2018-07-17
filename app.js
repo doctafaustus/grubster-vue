@@ -267,6 +267,7 @@ function saveExtensionRecipeAsFavorite(recipe, req, res, message) {
 
 // Add / find users
 app.post('/api/users/:subject', (req, res) => {
+  console.log('[DEBUG!!!!!] -----------');
 
   const { subject } = req.params;
   const { nickname } = req.query; 
@@ -275,9 +276,10 @@ app.post('/api/users/:subject', (req, res) => {
 
   User.findOne({ '_id': subject }, (err, user) => {
     if (user) {
+      console.log('[DEBUG!!!!!]')
       res.json(user);
     } else { // User not found, create new user
-      console.log('Creating new user');
+      console.log('[DEBUG!!!!!] Creating new user');
       const newUser = new User();
 
       newUser._id = subject;
