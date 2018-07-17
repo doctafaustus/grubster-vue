@@ -121,7 +121,7 @@ app.listen(process.env.PORT || 3000, () => {
 
 
 // Homepage (Heroku-accessible only)
-app.get(['/', '/callback'], (req, res) => {
+app.get(['/', '/callback', '/category/:category', '/most-popular', '/favorites', '/search/:term'], (req, res) => {
   res.sendFile(path.join(`${__dirname}/grubster/dist/index.html`));
 });
 
