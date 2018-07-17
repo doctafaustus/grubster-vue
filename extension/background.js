@@ -1,6 +1,6 @@
 const devURL = 'http://localhost:8080';
-const prodURL = 'http://www.grubster.com';
-const URL = devURL;
+const prodURL = 'https://grubster-app.herokuapp.com/';
+const URL = prodURL;
 
 
 // Installation callback

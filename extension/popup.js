@@ -1,3 +1,9 @@
+var devURL = 'http://localhost:8080';
+var prodURL = 'https://grubster-app.herokuapp.com/';
+var URL = prodURL;
+
+
+
 // When popup.us opens, send message to content script to extract recipe data
 // On response, populate the extension form with the returned data
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -40,7 +46,7 @@ $('#submit-recipe').click(function() {
   chrome.storage.sync.get('sub', function(item) {
     $.ajax({
       type: 'POST',
-      url: 'http://127.0.0.1:3000/api/extension',
+      url: URL + '/api/extension',
       contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
       data: { 
         title: $('#recipe-title').val(),
@@ -63,7 +69,7 @@ $('#submit-recipe').click(function() {
         }
 
         if (item.sub) {
-          chrome.tabs.query({ url: ['http://localhost:8080/*'] }, function(tabs) {
+          chrome.tabs.query({ url: ['http://localhost:8080/*', 'https://grubster-app.herokuapp.com/*'] }, function(tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {rsAction: 'refresh'}, function(response) {
               console.log('Message sent');
             });

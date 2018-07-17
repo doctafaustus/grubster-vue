@@ -6,7 +6,7 @@ import VueResource from 'vue-resource';
 import VueRouter from 'vue-router';
 import routes from './routes';
 
-window.endpoint = (window.location.origin.indexOf('http://localhost') > -1) ? 'http://localhost:3000' : '';
+window.endpoint = (window.location.origin.indexOf('http://localhost') > -1) ? 'http://localhost:3000' : 'https://grubster-app.herokuapp.com';
 
 Vue.use(VueResource);
 Vue.use(VueRouter);
