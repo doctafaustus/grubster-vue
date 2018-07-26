@@ -21,7 +21,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 		// Generate response data
 		var response = {
-			title: $('title:first').text().trim().replace(/\s([|\-—:>•·~\[,]+|(by|from|recipe)?)\s.*/, ''),
+			title: $('title:first').text().trim().replace(/\s([|\-—:>•·~\[,]+|(by|from|recipe)?)\s.*/ig, ''),
 			url: window.location.href,
 			host: window.location.hostname.replace(/^www\./, ''),
 			images: getImages(),
