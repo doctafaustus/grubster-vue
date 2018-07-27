@@ -1,5 +1,3 @@
-// Delete recipe image from database
-// Update lazy load count
 // "GrubFeed" as an alternative name, or something-feed
 
 // Core Modules
@@ -42,6 +40,11 @@ if (!process.env.PORT) {
 const adminID = process.env.PORT ? process.env.ADMIN_ID : fs.readFileSync('./private/admin-id.txt').toString();
 
 
+// App config data
+const lazyLoadLimit = 84;
+
+
+// Schema
 const userSchema = new mongoose.Schema({
   _id: String,
   nickname: String,
@@ -136,7 +139,7 @@ app.get(['/', '/callback', '/category/:category', '/most-popular', '/favorites',
 app.get('/api/recipes', (req, res) => {
 
   const page = req.query.page;
-  Recipe.paginate({ flag: { $lt: 3 }}, { page: page, limit: 12, sort: { creationDate: -1 }}, (err, data) => {
+  Recipe.paginate({ flag: { $lt: 3 }}, { page: page, limit: lazyLoadLimit, sort: { creationDate: -1 }}, (err, data) => {
     sendRecipes(data, res);
   });
 });
@@ -147,7 +150,7 @@ app.get('/api/recipes/search/:term', (req, res) => {
   const { page } = req.query;
   const { term } = req.params;
 
-  Recipe.paginate({ flag: { $lt: 3 }, title: { $regex: term, $options: 'i' }}, { page: page, limit: 12, sort: { favorites: -1 }}, (err, data) => {
+  Recipe.paginate({ flag: { $lt: 3 }, title: { $regex: term, $options: 'i' }}, { page: page, limit: lazyLoadLimit, sort: { favorites: -1 }}, (err, data) => {
     sendRecipes(data, res);
   });
 });
@@ -157,7 +160,7 @@ app.get('/api/recipes/search/:term', (req, res) => {
 app.get('/api/recipes/most-popular', (req, res) => {
   const { page } = req.query;
 
-  Recipe.paginate({ flag: { $lt: 3 }}, { page: page, limit: 12, sort: { favorites: -1 }}, (err, data) => {
+  Recipe.paginate({ flag: { $lt: 3 }}, { page: page, limit: lazyLoadLimit, sort: { favorites: -1 }}, (err, data) => {
     sendRecipes(data, res);
   });
 });
@@ -195,7 +198,7 @@ app.get('/api/recipes/category/:category', (req, res) => {
   const { category } = req.params;
   const { page } = req.query;
 
-  Recipe.paginate({ category: category, flag: { $lt: 3 }}, { page: page, limit: 12, sort: { creationDate: -1 }}, (err, data) => {
+  Recipe.paginate({ category: category, flag: { $lt: 3 }}, { page: page, limit: lazyLoadLimit, sort: { creationDate: -1 }}, (err, data) => {
     sendRecipes(data, res);
   });
 });
@@ -387,13 +390,18 @@ app.get('/api/flag/:recipeID', (req, res) => {
 });
 
 // Admin Delete
-app.get('/api/admin-delete/:recipeID', (req, res) => {
-  const { recipeID } = req.params;
+app.get('/api/admin-delete/:recipeID/:imageID', (req, res) => {
+  const { recipeID, imageID } = req.params;
+
+  console.log('imageID', imageID)
 
   if (req.session.sub === adminID) {
     Recipe.remove({ '_id': recipeID }, (err, recipe) => {
       console.log('recipe deleted!');
-      res.sendStatus(200);
+      if (!imageID) return res.sendStatus(200);
+      cloudinary.v2.api.delete_resources(imageID, (error, result) => {
+        res.sendStatus(200);
+      });
     });
   } else {
     res.sendStatus(401);
@@ -409,8 +417,5 @@ function sendRecipes(data, res) {
     recipes: data.docs,
   });
 }
-
-
-
 
 

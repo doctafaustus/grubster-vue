@@ -88,7 +88,9 @@ export default {
     adminDelete(event) {
       const target = event.target.closest('li');
       const id = target.getAttribute('data-recipe-id');
-      this.$http.get(`${window.endpoint}/api/admin-delete/${id}`)
+      const imageId = target.querySelector('.recipe-image img').getAttribute('src').replace(/https:\/\/res.cloudinary.com\/dormh2fvt\/image\/upload\/\w\d+\//, '').replace('.jpg', '');
+
+      this.$http.get(`${window.endpoint}/api/admin-delete/${id}/${imageId}`)
       .then(data => {
         console.log('successful admin delete');
         target.classList.add('admin-deleted');
