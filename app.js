@@ -99,7 +99,11 @@ const cloudinaryOptions = { gravity: 'center', height: 285, width: 285, crop: 'f
 
 // Middleware
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+  const allowedOrigins = ['http://localhost:8080', 'http://www.grubster.me'];
+  const origin = req.headers.origin;
+  if (allowedOrigins.indexOf(origin) > -1) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
