@@ -99,7 +99,7 @@ const cloudinaryOptions = { gravity: 'center', height: 285, width: 285, crop: 'f
 
 // Middleware
 app.use((req, res, next) => {
-  const allowedOrigins = ['http://localhost:8080', 'http://www.grubster.me'];
+  const allowedOrigins = ['http://localhost:8080', 'http://www.grubster.me', 'http://grubster.me'];
   const origin = req.headers.origin;
   if (allowedOrigins.indexOf(origin) > -1) {
     res.setHeader('Access-Control-Allow-Origin', origin);
