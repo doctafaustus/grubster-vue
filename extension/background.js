@@ -1,5 +1,5 @@
 const devURL = 'http://localhost:8080';
-const prodURL = 'https://grubster-app.herokuapp.com';
+const prodURL = 'http://grubster.me';
 const URL = prodURL;
 
 

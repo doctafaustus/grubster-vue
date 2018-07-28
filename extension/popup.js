@@ -1,5 +1,5 @@
 var devURL = 'http://localhost:8080';
-var prodURL = 'https://grubster-app.herokuapp.com';
+const prodURL = 'http://grubster.me';
 var URL = prodURL;
 
 
