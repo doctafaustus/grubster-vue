@@ -35,7 +35,7 @@
     
     <div id="bar-outer">
       <ul id="bar">
-        <li id="recent-li"><router-link to="/">Recent</router-link></li>
+        <li id="recent-li"><router-link to="/">Recipe Feed</router-link></li>
         <li id="most-popular-li"><router-link to="/most-popular">Most Popular</router-link></li>
         <li id="favorites-li"><router-link to="/favorites">Favorites</router-link></li>
         <li id="categories">

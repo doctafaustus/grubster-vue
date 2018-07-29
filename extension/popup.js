@@ -1,5 +1,5 @@
 var devURL = 'http://localhost:8080';
-const prodURL = 'http://grubster.me';
+const prodURL = 'http://www.grubster.me';
 var URL = prodURL;
 
 
@@ -69,7 +69,7 @@ $('#submit-recipe').click(function() {
         }
 
         if (item.sub) {
-          chrome.tabs.query({ url: ['http://localhost:8080/*', 'https://grubster-app.herokuapp.com/*'] }, function(tabs) {
+          chrome.tabs.query({ url: ['http://localhost:8080/*', 'https://grubster-app.herokuapp.com/*', 'http://wwww.grubster.me'] }, function(tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {rsAction: 'refresh'}, function(response) {
               console.log('Message sent');
             });

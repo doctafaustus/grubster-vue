@@ -1,5 +1,5 @@
 if (window.location.hostname === 'grubster.herokuapp.com' ||
-	window.location.hostname === 'www.grubster.com' ||
+	window.location.hostname === 'www.grubster.me' ||
 	window.location.hostname === 'localhost') {
 
 	setTimeout(function() {

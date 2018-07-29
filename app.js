@@ -1,4 +1,5 @@
-// "GrubFeed" as an alternative name, or something-feed
+// "Feed" instead of "Recent"
+// New banner in footer
 
 // Core Modules
 const express = require('express');

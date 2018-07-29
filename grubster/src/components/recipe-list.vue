@@ -221,7 +221,6 @@ export default {
   watch: {
     '$route.params': function() {
       this.category = this.getCategory();
-      console.log('category', this.category);
       this.recipes = [];
       this.pageCounter = 0;
       this.getRecipes();
