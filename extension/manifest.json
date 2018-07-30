@@ -3,7 +3,7 @@
 
   "name": "Grubster",
   "description": "Easily add recipes to Grubster!",
-  "version": "0.0.0.8",
+  "version": "0.0.0.9",
 
   "icons": { 
     "16": "icon.png",

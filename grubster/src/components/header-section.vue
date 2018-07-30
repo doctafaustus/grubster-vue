@@ -90,7 +90,7 @@
           <p>
             Recipes are saved to grubster exclusively via our Chrome extension.
           </p>
-          <div id="add-recipe-image"></div>
+          <a id="add-recipe-image" href="https://chrome.google.com/webstore/detail/grubster/gbajiiilpiadmjdmkgmnmhpnnafffaal" target="_blank"></a>
           <p>
             Download it <a id="extension-link" href="https://chrome.google.com/webstore/detail/grubster/gbajiiilpiadmjdmkgmnmhpnnafffaal" target="_blank">here</a> and start saving recipes to grubster and your favorites today!
           </p>
