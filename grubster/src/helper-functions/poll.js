@@ -8,7 +8,7 @@ export default function poll(fn, callback, interval = 50, expiration = 20000) {
   // If time has expired, return
   } else if (expiration <= 0) {
 
-    return;
+    return console.log('expiration reached');
 
   // Otherwise, try again and decrement expiration
   } else {
