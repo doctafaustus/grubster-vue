@@ -1,6 +1,6 @@
 if (window.location.hostname === 'grubster.herokuapp.com' ||
-	window.location.hostname === 'www.grubster.me' ||
-	window.location.hostname === 'localhost') {
+	window.location.hostname === 'www.grubster.me'/* ||
+	window.location.hostname === 'localhost'*/) {
 
 	setTimeout(function() {
 		var sub = document.querySelector('#sub').textContent.trim();
